@@ -15,7 +15,7 @@ export const Header = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-white shadow-lg">
-      <div className="flex justify-between lg:justify-around items-center px-3 py-3 container mx-auto">
+      <div className="flex justify-between items-center px-3 py-3 container mx-auto">
         <a
           onClick={() => navigate("/?section=home")}
           className="cursor-pointer"

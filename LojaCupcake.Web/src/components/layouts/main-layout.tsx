@@ -10,7 +10,7 @@ export default function MainLayout({ children }: Props) {
       <Header />
 
       <div className="flex flex-col grow">
-        <main className="grow mt-10">{children}</main>
+        <main className="grow mt-20 container mx-auto px-5 py-5">{children}</main>
         {/* <Footer /> */}
       </div>
     </div>
