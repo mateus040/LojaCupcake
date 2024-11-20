@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CupcakeController;
+use App\Http\Controllers\{
+    AuthController,
+    CartController,
+    CupcakeController,
+};
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
@@ -20,5 +23,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{cupcake}', [CupcakeController::class, 'show']);
         Route::put('/{cupcake}', [CupcakeController::class, 'update']);
         Route::delete('/{cupcake}', [CupcakeController::class, 'destroy']);
+
+        Route::prefix('/{cupcake}/cart')->group(function () {
+            Route::post('/', [CartController::class, 'addItemCart']);
+            Route::delete('/', [CartController::class, 'removeFromCart']);
+            Route::post('/increase', [CartController::class, 'increaseQuantity']);
+            Route::post('/decrease', [CartController::class, 'decreaseQuantity']);
+        });
     });
 });

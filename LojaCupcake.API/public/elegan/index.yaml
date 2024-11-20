@@ -24,6 +24,12 @@ paths:
 
   /cupcakes:
     $ref: "./routes/cupcake/actions.yaml"
-
   /cupcakes/{id}:
     $ref: "./routes/cupcake/id/actions.yaml"
+
+  /cupcakes/{id}/cart:
+    $ref: "./routes/cupcake/id/cart/actions.yaml"
+  /cupcakes/{id}/cart/increase:
+    $ref: "./routes/cupcake/id/cart/increase/actions.yaml"
+  /cupcakes/{id}/cart/decrease:
+    $ref: "./routes/cupcake/id/cart/decrease/actions.yaml"
