@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Cart\CartRequest;
+use App\Http\Resources\Cart\CartResource;
 use App\Models\CartItem;
 use App\Models\Cupcake;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -14,6 +14,15 @@ class CartController extends Controller
     public function userAuthenticated(): User
     {
         return Auth::user();
+    }
+
+    public function index()
+    {
+        $user = $this->userAuthenticated();
+
+        $cartItems = $user->items;
+
+        return CartResource::collection($cartItems);
     }
 
     public function addItemCart(CartRequest $request, Cupcake $cupcake)

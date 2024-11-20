@@ -31,4 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/decrease', [CartController::class, 'decreaseQuantity']);
         });
     });
+
+    Route::get('/cart', [CartController::class, 'index']);
 });
