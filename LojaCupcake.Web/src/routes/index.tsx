@@ -4,6 +4,7 @@ import Login from "../pages/login";
 import Register from "../pages/register";
 import Cart from "../pages/cart";
 import Checkout from "../pages/checkout";
+import Request from "../pages/request";
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,8 @@ export default function AppRouter() {
         <Route path="/cart" element={<Cart />} />
 
         <Route path="/checkout" element={<Checkout />} />
+
+        <Route path="/request" element={<Request />} />
       </Routes>
     </BrowserRouter>
   );
