@@ -1,5 +1,9 @@
+import MainLayout from "../../components/layouts/main-layout";
+
 export default function Main() {
   return (
-    <div>main</div>
+    <MainLayout>
+      main
+    </MainLayout>
   )
 }
