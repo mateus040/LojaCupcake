@@ -18,6 +18,7 @@ class CupcakeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'amount' => $this->amount,
+            'image' => $this->image,
             'created_at' => $this->created_at->toDateTimeLocalString(),
         ];
     }
