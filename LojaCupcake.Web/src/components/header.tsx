@@ -67,7 +67,7 @@ export const Header = () => {
         </div>
 
         <div className="hidden lg:flex items-center">
-          <Link to="/profile">
+          <Link to="/profile-details">
             <FaRegCircleUser size={30} className="hover:text-[#d42e86]" />
           </Link>
 

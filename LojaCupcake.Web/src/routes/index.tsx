@@ -5,6 +5,7 @@ import Register from "../pages/register";
 import Cart from "../pages/cart";
 import Checkout from "../pages/checkout";
 import Request from "../pages/request";
+import ProfileDetails from "../pages/profile-details";
 
 export default function AppRouter() {
   return (
@@ -21,6 +22,8 @@ export default function AppRouter() {
         <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/request" element={<Request />} />
+
+        <Route path="/profile-details" element={<ProfileDetails />} />
       </Routes>
     </BrowserRouter>
   );
