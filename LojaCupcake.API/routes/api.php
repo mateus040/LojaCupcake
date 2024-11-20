@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     AuthController,
     CartController,
+    CheckoutController,
     CupcakeController,
 };
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/cart', [CartController::class, 'index']);
+
+    Route::prefix('/checkout')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index']);
+        Route::post('/', [CheckoutController::class, 'checkout']);
+    });
 });

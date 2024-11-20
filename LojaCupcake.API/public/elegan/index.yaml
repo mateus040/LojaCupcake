@@ -36,3 +36,6 @@ paths:
     $ref: "./routes/cupcake/id/cart/increase/actions.yaml"
   /cupcakes/{id}/cart/decrease:
     $ref: "./routes/cupcake/id/cart/decrease/actions.yaml"
+
+  /checkout:
+    $ref: "./routes/checkout/actions.yaml"

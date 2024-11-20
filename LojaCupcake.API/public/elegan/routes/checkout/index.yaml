@@ -1,0 +1,35 @@
+
+      tags:
+        - 'Checkout'
+      summary: 'Retornar checkouts realizados'
+      security:
+        - bearerAuth: []
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: Valor do pedido
+                      payment_type:
+                        type: string
+                        description: Forma de pagamento
+                      delivery_type:
+                        type: string
+                        description: Forma de entrega
+                      created_at:
+                        type: string
+                        format: date-time
+        401:
+          $ref: "../../responses/401.yaml"
