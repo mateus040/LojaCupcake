@@ -30,7 +30,7 @@ export const Header = () => {
             menuResponsive ? "top-full" : "top-[-600%]"
           } lg:w-auto w-full flex items-center lg:-ms-6 px-5 shadow-xl lg:shadow-none font-semibold bg-white`}
         >
-          <ul className="flex lg:flex-row flex-col lg:items-center gap-8 container mx-auto mt-6 lg:mt-1 mb-6 lg:mb-0">
+          <ul className="flex lg:flex-row flex-col lg:items-center gap-8 container mx-auto mt-6 lg:mt-2 mb-6 lg:mb-0">
             <li className="lg:hidden mx-4 flex items-center">
               <Link to="/profile">
                 <FaRegCircleUser size={30} />
@@ -42,44 +42,36 @@ export const Header = () => {
             </li>
 
             <li className="mx-4 lg:mx-0">
-              <button
-                onClick={() => navigate("/?section=home")}
-                className="hover:text-[#d42e86] font-semibold"
-              >
-                Início
-              </button>
-            </li>
-            <li className="mx-4 lg:mx-0">
               <Link
-                to="/produtos"
-                className="hover:text-[#d42e86] font-semibold"
+                to="/"
+                className="hover:text-[#d42e86] font-medium"
               >
-                Produtos
+                Vitrine da loja
               </Link>
             </li>
             <li className="mx-4 lg:mx-0">
               <Link
-                to="/empresas"
-                className="hover:text-[#d42e86] font-semibold"
+                to="/cart"
+                className="hover:text-[#d42e86] font-medium"
               >
-                Empresas
+                Meu carrinho
               </Link>
             </li>
             <li className="mx-4 lg:mx-0">
-              <button
-                onClick={() => navigate("/?section=sobre")}
-                className="hover:text-[#d42e86] font-semibold"
+              <Link
+                to="/requests"
+                className="hover:text-[#d42e86] font-medium"
               >
-                Sobre
-              </button>
+                Meus pedidos
+              </Link>
             </li>
             <li className="mx-4 lg:mx-0">
-              <button
-                onClick={() => navigate("/?section=contato")}
-                className="hover:text-[#d42e86] font-semibold"
+              <Link
+                to="/login"
+                className="hover:text-[#d42e86] font-medium"
               >
-                Contato
-              </button>
+                Fazer Login/Cadastro
+              </Link>
             </li>
           </ul>
         </div>
