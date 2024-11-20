@@ -21,3 +21,9 @@ paths:
     $ref: "./routes/auth/login/actions.yaml"
   /auth/me:
     $ref: "./routes/auth/me/actions.yaml"
+
+  /cupcakes:
+    $ref: "./routes/cupcake/actions.yaml"
+
+  /cupcakes/{id}:
+    $ref: "./routes/cupcake/id/actions.yaml"

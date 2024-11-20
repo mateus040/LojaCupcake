@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CupcakeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
@@ -9,5 +10,15 @@ Route::prefix('/auth')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
+    });
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('/cupcakes')->group(function () {
+        Route::get('/', [CupcakeController::class, 'index']);
+        Route::post('/', [CupcakeController::class, 'store']);
+        Route::get('/{cupcake}', [CupcakeController::class, 'show']);
+        Route::put('/{cupcake}', [CupcakeController::class, 'update']);
+        Route::delete('/{cupcake}', [CupcakeController::class, 'destroy']);
     });
 });
