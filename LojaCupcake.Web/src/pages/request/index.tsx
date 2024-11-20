@@ -25,7 +25,7 @@ export default function Request() {
       <div className="w-full">
         <p className="text-2xl">Meus pedidos</p>
 
-        <div className="mt-6">
+        <div className="mt-6 overflow-x-auto">
           <table className="w-full border-2 border-gray-300 text-sm rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-gray-100">
