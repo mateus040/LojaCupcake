@@ -31,16 +31,6 @@ export const Header = () => {
           } lg:w-auto w-full flex items-center lg:-ms-6 px-5 shadow-xl lg:shadow-none font-semibold bg-white`}
         >
           <ul className="flex lg:flex-row flex-col lg:items-center gap-8 container mx-auto mt-6 lg:mt-2 mb-6 lg:mb-0">
-            <li className="lg:hidden mx-4 flex items-center">
-              <Link to="/profile">
-                <FaRegCircleUser size={30} />
-              </Link>
-
-              <Link to="/cart">
-                <MdOutlineShoppingCart size={30} className="mx-5 ms-3" />
-              </Link>
-            </li>
-
             <li className="mx-4 lg:mx-0">
               <Link
                 to="/"
