@@ -24,7 +24,7 @@ class CupcakeController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request
                 ->file('image')
-                ->store('cupcakes', 'public');
+                ->store('public');
         }
 
         Cupcake::create([
