@@ -8,6 +8,7 @@ import Request from "../pages/request";
 import ProfileDetails from "../pages/profile-details";
 import Cupcakes from "../pages/admin/cupcakes";
 import PrivateRoute from "./private-routes";
+import CupcakeDetails from "../pages/details";
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,8 @@ export default function AppRouter() {
         <Route path="/register" element={<Register />} />
 
         <Route path="/" element={<Main />} />
+
+        <Route path="/cupcake/:cupcakeId" element={<CupcakeDetails />} />
 
         <Route
           path="/cart"

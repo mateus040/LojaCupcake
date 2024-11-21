@@ -5,7 +5,7 @@ import api from "../../services/api-client";
 import ListServiceResult from "../../interfaces/list-service-result";
 import Loading from "../../components/loading";
 import apiErrorHandler from "../../services/api-error-handler";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Main() {
   const navigate = useNavigate();
@@ -80,49 +80,53 @@ export default function Main() {
             <>
               {cupcakes.map((cupcake) => (
                 <div className="col-span-3" key={cupcake.id}>
-                  <div className="py-7 px-8 bg-white rounded-lg">
-                    {images[cupcake.image] && (
-                      <img
-                        className="object-contain rounded-lg"
-                        src={images[cupcake.image]}
-                        // src="/images/cupcake-chocolate.png"
-                        alt={cupcake.name}
-                      />
-                    )}
+                  <Link
+                    to={`/cupcake/${cupcake.id}`}
+                  >
+                    <div className="py-7 px-8 bg-white rounded-lg">
+                      {images[cupcake.image] && (
+                        <img
+                          className="object-contain rounded-lg"
+                          src={images[cupcake.image]}
+                          // src="/images/cupcake-chocolate.png"
+                          alt={cupcake.name}
+                        />
+                      )}
 
-                    <div className="mt-3">
-                      <p className="text-xl">{cupcake.name}</p>
-                      <p className="text-2xl font-bold mt-2">
-                        R${cupcake.amount}{" "}
-                        <span className="font-light text-lg">/uni</span>
-                      </p>
+                      <div className="mt-3">
+                        <p className="text-xl">{cupcake.name}</p>
+                        <p className="text-2xl font-bold mt-2">
+                          R${cupcake.amount}{" "}
+                          <span className="font-light text-lg">/uni</span>
+                        </p>
 
-                      <div className="flex items-center justify-between mt-3 space-x-2">
+                        <div className="flex items-center justify-between mt-3 space-x-2">
+                          <button
+                            onClick={() => updateQuantity(cupcake.id, -1)}
+                            className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center">
+                            {quantities[cupcake.id] || 1}
+                          </span>
+                          <button
+                            onClick={() => updateQuantity(cupcake.id, 1)}
+                            className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
+                          >
+                            +
+                          </button>
+                        </div>
+
                         <button
-                          onClick={() => updateQuantity(cupcake.id, -1)}
-                          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
+                          onClick={() => addToCart(cupcake)}
+                          className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
                         >
-                          -
-                        </button>
-                        <span className="w-8 text-center">
-                          {quantities[cupcake.id] || 1}
-                        </span>
-                        <button
-                          onClick={() => updateQuantity(cupcake.id, 1)}
-                          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
-                        >
-                          +
+                          Adicionar ao carrinho
                         </button>
                       </div>
-
-                      <button
-                        onClick={() => addToCart(cupcake)}
-                        className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
-                      >
-                        Adicionar ao carrinho
-                      </button>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </>
