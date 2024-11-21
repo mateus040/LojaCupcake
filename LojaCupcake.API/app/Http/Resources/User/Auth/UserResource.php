@@ -17,6 +17,13 @@ class UserResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
+            'zipcode' => $this->zipcode,
+            'street' => $this->street,
+            'number' => $this->number,
+            'neighborhood' => $this->neighborhood,
+            'state' => $this->state,
+            'city' => $this->city,
+            'phone' => $this->phone,
             'created_at' => $this->created_at->toDateTimeLocalString(),
         ];
     }

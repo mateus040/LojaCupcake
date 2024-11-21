@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('neighborhood', 256)->nullable();
             $table->string('state', 32)->nullable();
             $table->string('city', 64)->nullable();
+            $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
