@@ -7,6 +7,7 @@ import Checkout from "../pages/checkout";
 import Request from "../pages/request";
 import ProfileDetails from "../pages/profile-details";
 import Cupcakes from "../pages/admin/cupcakes";
+import PrivateRoute from "./private-routes";
 
 export default function AppRouter() {
   return (
@@ -18,15 +19,50 @@ export default function AppRouter() {
 
         <Route path="/" element={<Main />} />
 
-        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/checkout" element={<Checkout />} />
+        <Route
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/requests" element={<Request />} />
+        <Route
+          path="/requests"
+          element={
+            <PrivateRoute>
+              <Request />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/profile-details" element={<ProfileDetails />} />
+        <Route
+          path="/profile-details"
+          element={
+            <PrivateRoute>
+              <ProfileDetails />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/admin/cupcakes" element={<Cupcakes />} />
+        <Route
+          path="/admin/cupcakes"
+          element={
+            <PrivateRoute>
+              <Cupcakes />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

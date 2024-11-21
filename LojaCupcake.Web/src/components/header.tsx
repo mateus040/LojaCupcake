@@ -3,14 +3,22 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { useAuthCheck } from "../hooks/use-auth-check";
 
 export const Header = () => {
   const navigate = useNavigate();
+
+  const { hasToken, expired } = useAuthCheck();
 
   const [menuResponsive, setMenuResponsive] = useState<boolean>(false);
 
   const handleClick = () => {
     setMenuResponsive((state) => !state);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate(-1);
   };
 
   return (
@@ -32,36 +40,33 @@ export const Header = () => {
         >
           <ul className="flex lg:flex-row flex-col lg:items-center gap-8 container mx-auto mt-6 lg:mt-2 mb-6 lg:mb-0">
             <li className="mx-4 lg:mx-0">
-              <Link
-                to="/"
-                className="hover:text-[#d42e86] font-medium"
-              >
+              <Link to="/" className="hover:text-[#d42e86] font-medium">
                 Vitrine da loja
               </Link>
             </li>
             <li className="mx-4 lg:mx-0">
-              <Link
-                to="/cart"
-                className="hover:text-[#d42e86] font-medium"
-              >
+              <Link to="/cart" className="hover:text-[#d42e86] font-medium">
                 Meu carrinho
               </Link>
             </li>
             <li className="mx-4 lg:mx-0">
-              <Link
-                to="/requests"
-                className="hover:text-[#d42e86] font-medium"
-              >
+              <Link to="/requests" className="hover:text-[#d42e86] font-medium">
                 Meus pedidos
               </Link>
             </li>
             <li className="mx-4 lg:mx-0">
-              <Link
-                to="/login"
-                className="hover:text-[#d42e86] font-medium"
-              >
-                Fazer Login/Cadastro
-              </Link>
+              {hasToken && !expired ? (
+                <button
+                  onClick={handleLogout}
+                  className="hover:text-[#d42e86] font-medium"
+                >
+                  Sair
+                </button>
+              ) : (
+                <Link to="/login" className="hover:text-[#d42e86] font-medium">
+                  Fazer Login/Cadastro
+                </Link>
+              )}
             </li>
           </ul>
         </div>
@@ -72,7 +77,10 @@ export const Header = () => {
           </Link>
 
           <Link to="/cart">
-            <MdOutlineShoppingCart size={30} className="hover:text-[#d42e86] mx-5 ms-3" />
+            <MdOutlineShoppingCart
+              size={30}
+              className="hover:text-[#d42e86] mx-5 ms-3"
+            />
           </Link>
         </div>
 

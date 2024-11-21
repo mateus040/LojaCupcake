@@ -100,13 +100,20 @@ export default function Checkout() {
                   <div className="text-sm space-y-2">
                     <p>Para</p>
                     <p className="font-semibold">{profile?.name}</p>
-                    <p>
-                      {profile?.street}, {profile?.number}
-                    </p>
-                    <p>
-                      {profile?.city} - {profile?.state}
-                    </p>
-                    <p>Telefone: {profile?.phone}</p>
+                    {profile?.street && profile?.number && (
+                      <p>
+                        {profile?.street}, {profile?.number}
+                      </p>
+                    )}
+
+                    {profile?.city && profile?.state && (
+                      <p>
+                        {profile?.city} - {profile?.state}
+                      </p>
+                    )}
+
+                    {profile?.phone && <p>Telefone: {profile?.phone}</p>}
+
                     <p>E-mail: {profile?.email}</p>
                   </div>
                 </div>

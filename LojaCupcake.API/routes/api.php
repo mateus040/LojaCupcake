@@ -17,14 +17,17 @@ Route::prefix('/auth')->group(function () {
     });
 });
 
+Route::prefix('/cupcakes')->group(function () {
+    Route::get('/', [CupcakeController::class, 'index']);
+    Route::get('/{cupcake}', [CupcakeController::class, 'show']);
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/cupcakes')->group(function () {
-        Route::get('/', [CupcakeController::class, 'index']);
         Route::post('/', [CupcakeController::class, 'store']);
-        Route::get('/{cupcake}', [CupcakeController::class, 'show']);
         Route::put('/{cupcake}', [CupcakeController::class, 'update']);
         Route::delete('/{cupcake}', [CupcakeController::class, 'destroy']);
-
+        
         Route::prefix('/{cupcake}/cart')->group(function () {
             Route::post('/', [CartController::class, 'addItemCart']);
             Route::delete('/', [CartController::class, 'removeFromCart']);
