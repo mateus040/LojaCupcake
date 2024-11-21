@@ -12,7 +12,7 @@ class CupcakeController extends Controller
 {
     public function index()
     {
-        $cupcakes = Cupcake::paginate();
+        $cupcakes = Cupcake::all();
 
         return CupcakeResource::collection($cupcakes);
     }

@@ -2,8 +2,6 @@
       tags:
         - Cupcakes
       summary: Exibir detalhes de um cupcake
-      security:
-        - bearerAuth: []
       consumes:
         - application/json
       produces:

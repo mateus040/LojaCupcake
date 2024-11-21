@@ -2,8 +2,6 @@
       tags:
         - Cupcakes
       summary: Listar cupcakes
-      security:
-        - bearerAuth: []
       consumes:
         - application/json
       produces:
@@ -30,10 +28,6 @@
                         created_at:
                           type: string
                           format: date-time
-                  links:
-                    $ref: ../../responses/paginate/links.yaml
-                  meta:
-                    $ref: ../../responses/paginate/meta.yaml
         401:
           $ref: ../../responses/401.yaml
         404:
