@@ -1,3 +1,4 @@
+import { Footer } from "../footer";
 import { Header } from "../header";
 
 interface Props {
@@ -11,7 +12,7 @@ export default function MainLayout({ children }: Props) {
 
       <div className="flex flex-col grow">
         <main className="grow mt-20 container mx-auto px-5 py-5">{children}</main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );
