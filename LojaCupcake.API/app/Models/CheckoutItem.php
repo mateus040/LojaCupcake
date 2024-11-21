@@ -5,24 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Checkout extends Model
+class CheckoutItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'checkout_id',
+        'cupcake_id',
         'amount',
         'delivery_type',
         'payment_type',
     ];
 
-    public function user()
+    public function checkout()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Checkout::class);
     }
 
-    public function items()
+    public function cupcake()
     {
-        return $this->hasMany(CheckoutItem::class);
+        return $this->belongsTo(Cupcake::class);
     }
 }

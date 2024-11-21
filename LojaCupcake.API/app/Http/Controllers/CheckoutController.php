@@ -6,8 +6,9 @@ use App\Enums\DeliveryType;
 use App\Enums\PaymentType;
 use App\Exceptions\OutStockException;
 use App\Http\Requests\Checkout\CheckoutRequest;
-use App\Http\Resources\Checkout\CheckoutResource;
+use App\Http\Resources\Checkout\CheckoutItemsResource;
 use App\Models\Checkout;
+use App\Models\CheckoutItem;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,9 +24,9 @@ class CheckoutController extends Controller
     {
         $user = $this->userAuthenticated();
 
-        $checkouts = $user->checkouts;
+        $checkouts = $user->items;
 
-        return CheckoutResource::collection($checkouts);
+        return CheckoutItemsResource::collection($checkouts);
     }
 
     public function checkout(CheckoutRequest $request)
@@ -46,6 +47,8 @@ class CheckoutController extends Controller
         try {
             $totalAmount = 0;
 
+            $items = collect();
+
             foreach ($cartItems as $cartItem) {
                 $cupcake = $cartItem->cupcake;
 
@@ -55,15 +58,26 @@ class CheckoutController extends Controller
 
                 $totalAmount += $cupcake->amount * $cartItem->quantity;
 
+                $checkoutItem = new CheckoutItem([
+                    'cupcake_id' => $cupcake->id,
+                    'amount' => $totalAmount,
+                    'delivery_type' => DeliveryType::from($request->delivery_type)->value,
+                    'payment_type' => PaymentType::from($request->payment_type)->value,
+                ]);
+
                 $cupcake->decrement('quantity', $cartItem->quantity);
+
+                $items->push($checkoutItem);
             }
 
-            Checkout::create([
+            $checkout = Checkout::create([
                 'user_id' => $user->id,
                 'amount' => $totalAmount,
                 'delivery_type' => DeliveryType::from($request->delivery_type)->value,
                 'payment_type' => PaymentType::from($request->payment_type)->value,
             ]);
+
+            $checkout->items()->saveMany($items);
 
             $user->items()->delete();
 
