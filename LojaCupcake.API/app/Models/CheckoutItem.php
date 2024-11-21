@@ -12,7 +12,10 @@ class CheckoutItem extends Model
     protected $fillable = [
         'checkout_id',
         'cupcake_id',
+        'name',
         'amount',
+        'quantity',
+        'total_amount',
         'delivery_type',
         'payment_type',
     ];

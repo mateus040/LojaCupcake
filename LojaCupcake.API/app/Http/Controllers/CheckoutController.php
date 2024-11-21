@@ -19,14 +19,18 @@ class CheckoutController extends Controller
     {
         return Auth::user();
     }
-    
+
     public function index()
     {
         $user = $this->userAuthenticated();
 
-        $checkouts = $user->items;
+        $checkouts = $user->checkouts()->with('items.cupcake')->get();
 
-        return CheckoutItemsResource::collection($checkouts);
+        $checkoutItems = $checkouts->flatMap(function ($checkout) {
+            return $checkout->items;
+        });
+
+        return CheckoutItemsResource::collection($checkoutItems);
     }
 
     public function checkout(CheckoutRequest $request)
@@ -60,7 +64,10 @@ class CheckoutController extends Controller
 
                 $checkoutItem = new CheckoutItem([
                     'cupcake_id' => $cupcake->id,
-                    'amount' => $totalAmount,
+                    'name' => $cupcake->name,
+                    'amount' => $cupcake->amount,
+                    'quantity' => $cartItem->quantity,
+                    'total_amount' => $totalAmount,
                     'delivery_type' => DeliveryType::from($request->delivery_type)->value,
                     'payment_type' => PaymentType::from($request->payment_type)->value,
                 ]);
@@ -85,7 +92,7 @@ class CheckoutController extends Controller
 
             return response()->json([
                 'message' => 'Checkout successfully.',
-                'amount' => $totalAmount,
+                'total_amount' => $totalAmount,
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();

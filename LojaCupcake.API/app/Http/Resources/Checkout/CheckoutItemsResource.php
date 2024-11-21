@@ -16,8 +16,10 @@ class CheckoutItemsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'cupcake' => new CupcakeResource($this->cupcake),
+            'name' => $this->name,
             'amount' => $this->amount,
+            'quantity' => $this->quantity,
+            'total_amount' => $this->total_amount,
             'payment_type' => $this->payment_type,
             'delivery_type' => $this->delivery_type,
             'created_at' => $this->created_at->toDateTimeLocalString(),

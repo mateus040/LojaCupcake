@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('checkout_id')->constrained()->onDelete('cascade');
             $table->foreignId('cupcake_id')->constrained()->onDelete('cascade');
-            $table->integer('amount');
+            $table->string('name', 256);
+            $table->double('amount');
+            $table->integer('quantity');
+            $table->double('total_amount');
             $table->string('delivery_type');
             $table->string('payment_type');
             $table->timestamps();
