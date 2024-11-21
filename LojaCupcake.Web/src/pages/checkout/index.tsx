@@ -72,9 +72,7 @@ export default function Checkout() {
     );
   };
 
-  const deliveryFee = 10.0;
-  const subtotal = calculateSubtotal();
-  const total = subtotal + deliveryFee;
+  const total = calculateSubtotal();
 
   useEffect(() => {
     fetchProfile();
@@ -222,24 +220,6 @@ export default function Checkout() {
 
                 <div className="col-span-6 p-6 border border-gray-300 rounded-md bg-white">
                   <p className="font-semibold">Valor da compra</p>
-                  <hr className="mt-5" />
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 mt-4">
-                    <div className="col-span-6">
-                      <p className="font-semibold">Subtotal:</p>
-                    </div>
-                    <div className="col-span-6">
-                      <p className="font-light">R${subtotal.toFixed(2)}</p>
-                    </div>
-                  </div>
-                  <hr className="mt-5" />
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 mt-4">
-                    <div className="col-span-6">
-                      <p className="font-semibold">Entrega:</p>
-                    </div>
-                    <div className="col-span-6">
-                      <p className="font-light">R${deliveryFee.toFixed(2)}</p>
-                    </div>
-                  </div>
                   <hr className="mt-5" />
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 mt-4">
                     <div className="col-span-6">

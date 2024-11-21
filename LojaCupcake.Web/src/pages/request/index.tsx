@@ -44,10 +44,19 @@ export default function Request() {
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-300 p-4 text-center">
-                    Método de pagamento
+                    Cupcake
+                  </th>
+                  <th className="border border-gray-300 p-4 text-center">
+                    Preço
+                  </th>
+                  <th className="border border-gray-300 p-4 text-center">
+                    Quantidade
                   </th>
                   <th className="border border-gray-300 p-4 text-center">
                     Total
+                  </th>
+                  <th className="border border-gray-300 p-4 text-center">
+                    Método de pagamento
                   </th>
                   <th className="border border-gray-300 p-4 text-center">
                     Tipo de entrega
@@ -61,10 +70,19 @@ export default function Request() {
                 {requests.map((request) => (
                   <tr key={request.id} className="bg-white">
                     <td className="border border-gray-300 p-4 text-center">
-                      {getPaymentTypeLabel(request.payment_type)}
+                      {request.name}
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
                       {request.amount}
+                    </td>
+                    <td className="border border-gray-300 p-4 text-center">
+                      {request.quantity}
+                    </td>
+                    <td className="border border-gray-300 p-4 text-center">
+                      {request.total_amount}
+                    </td>
+                    <td className="border border-gray-300 p-4 text-center">
+                      {getPaymentTypeLabel(request.payment_type)}
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
                       {getDeliveryTypeLabel(request.delivery_type)}
