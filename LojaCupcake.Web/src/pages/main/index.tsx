@@ -4,13 +4,17 @@ import CupcakeModel from "../../interfaces/models/cupcake-model";
 import api from "../../services/api-client";
 import ListServiceResult from "../../interfaces/list-service-result";
 import Loading from "../../components/loading";
+import apiErrorHandler from "../../services/api-error-handler";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const [cupcakes, setCupcakes] = useState<CupcakeModel[]>([]);
-
   const [images, setImages] = useState<{ [key: string]: string }>({});
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   const fetchCupcakes = async (): Promise<void> => {
     setLoading(true);
@@ -22,15 +26,38 @@ export default function Main() {
         setCupcakes(cupcakesData);
 
         const imagesTemp: { [key: string]: string } = {};
+        const initialQuantities: { [key: number]: number } = {};
 
         cupcakesData.forEach((cupcake) => {
           const imageUrl = `/storage/cupcakes/${cupcake.image}`;
           imagesTemp[cupcake.image] = imageUrl;
+          initialQuantities[cupcake.id] = 1;
         });
 
         setImages(imagesTemp);
+        setQuantities(initialQuantities);
       })
       .finally(() => setLoading(false));
+  };
+
+  const updateQuantity = (cupcakeId: number, delta: number) => {
+    setQuantities((prevQuantities) => {
+      const newQuantity = (prevQuantities[cupcakeId] || 1) + delta;
+      return {
+        ...prevQuantities,
+        [cupcakeId]: newQuantity > 0 ? newQuantity : 1,
+      };
+    });
+  };
+
+  const addToCart = (cupcake: CupcakeModel) => {
+    const quantity = quantities[cupcake.id] || 1;
+    api
+      .post(`/cupcakes/${cupcake.id}/cart`, { ...cupcake, quantity })
+      .then(() => {
+        navigate("/cart");
+      })
+      .catch(apiErrorHandler);
   };
 
   useEffect(() => {
@@ -42,14 +69,14 @@ export default function Main() {
       <div className="w-full">
         <p className="text-2xl">Vitrine da loja</p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 mt-6 gap-5">
-          {loading && (
-            <div className="mt-6">
-              <Loading centered />
-            </div>
-          )}
+        {loading && (
+          <div className="mt-6">
+            <Loading centered />
+          </div>
+        )}
 
-          {!loading && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 mt-6 gap-5">
+          {!loading && cupcakes.length > 0 && (
             <>
               {cupcakes.map((cupcake) => (
                 <div className="col-span-3" key={cupcake.id}>
@@ -58,6 +85,8 @@ export default function Main() {
                       <img
                         className="object-contain rounded-lg"
                         src={images[cupcake.image]}
+                        // src="/images/cupcake-chocolate.png"
+                        alt={cupcake.name}
                       />
                     )}
 
@@ -67,7 +96,29 @@ export default function Main() {
                         R${cupcake.amount}{" "}
                         <span className="font-light text-lg">/uni</span>
                       </p>
-                      <button className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-3 rounded transition-all">
+
+                      <div className="flex items-center justify-between mt-3 space-x-2">
+                        <button
+                          onClick={() => updateQuantity(cupcake.id, -1)}
+                          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
+                        >
+                          -
+                        </button>
+                        <span className="w-8 text-center">
+                          {quantities[cupcake.id] || 1}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(cupcake.id, 1)}
+                          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <button
+                        onClick={() => addToCart(cupcake)}
+                        className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
+                      >
                         Adicionar ao carrinho
                       </button>
                     </div>
@@ -77,6 +128,10 @@ export default function Main() {
             </>
           )}
         </div>
+
+        {!loading && cupcakes.length === 0 && (
+          <p className="mt-6 flex items-center justify-center">Vitrine vazia</p>
+        )}
       </div>
     </MainLayout>
   );

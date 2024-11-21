@@ -1,6 +1,7 @@
 export default interface CupcakeModel {
-  id: string;
+  id: number;
   name: string;
-  amount: string;
+  amount: number;
+  quantity: string;
   image: string;
 }

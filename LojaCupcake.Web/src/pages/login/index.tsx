@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CleanLayout from "../../components/layouts/clean-layout";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -96,10 +96,16 @@ export default function Login() {
             </div>
           </div>
 
+          <div className="mt-2">
+            <p className="text-center">
+              Ainda não tem uma conta? <Link to="/register" className="underline">Cadastre-se!</Link>
+            </p>
+          </div>
+
           <button
             type="submit"
             className="bg-[#d42e86] inline-flex items-center justify-center w-full h-16 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md hover:bg-opacity-95"
-              disabled={loading}
+            disabled={loading}
           >
             {loading ? "Entrando..." : "Entrar"}
           </button>
