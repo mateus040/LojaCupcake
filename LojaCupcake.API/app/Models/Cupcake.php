@@ -24,6 +24,6 @@ class Cupcake extends Model
     public function getFotoUrlAttribute()
     {
         $firebaseStorage = app(FirebaseStorageService::class);
-        return $firebaseStorage->getFileUrl($this->foto);
+        return $firebaseStorage->getFileUrl($this->image);
     }
 }
