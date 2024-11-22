@@ -12,6 +12,7 @@ import CupcakeDetails from "../pages/details";
 import NotFound from "../pages/not-found";
 import ListCupcakes from "../pages/admin/cupcakes";
 import EditCupcake from "../pages/admin/cupcakes/edit";
+import Dashboard from "../pages/admin/dashboard";
 
 export default function AppRouter() {
   return (
@@ -57,6 +58,15 @@ export default function AppRouter() {
           element={
             <PrivateRoute>
               <ProfileDetails />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <Dashboard />
             </PrivateRoute>
           }
         />
