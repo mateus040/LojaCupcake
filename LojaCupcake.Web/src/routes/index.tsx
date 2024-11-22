@@ -9,6 +9,7 @@ import ProfileDetails from "../pages/profile-details";
 import Cupcakes from "../pages/admin/cupcakes";
 import PrivateRoute from "./private-routes";
 import CupcakeDetails from "../pages/details";
+import NotFound from "../pages/not-found";
 
 export default function AppRouter() {
   return (
@@ -66,6 +67,8 @@ export default function AppRouter() {
             </PrivateRoute>
           }
         />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
