@@ -1,6 +1,6 @@
 
       tags:
-        - 'Autenticação'
+        - 'Perfil'
       summary: 'Retornar os dados do usuário'
       security:
         - bearerAuth: []
@@ -30,4 +30,4 @@
                         format: date-time
                         description: Data de criação do usuário no seguinte formato 2019-02-01T03:45:27
         401:
-          $ref: "../../../responses/401.yaml"
+          $ref: "../../responses/401.yaml"

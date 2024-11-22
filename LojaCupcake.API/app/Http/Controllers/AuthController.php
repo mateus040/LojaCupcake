@@ -6,12 +6,8 @@ use App\Http\Requests\User\Auth\{
     LoginRequest,
     RegisterRequest,
 };
-use App\Http\Resources\User\Auth\UserResource;
 use App\Models\User;
-use Illuminate\Support\Facades\{
-    Auth,
-    Hash,
-};
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -57,12 +53,5 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token
         ], 200);
-    }
-
-    public function me()
-    {
-        $user = Auth::user();
-
-        return new UserResource($user);
     }
 }

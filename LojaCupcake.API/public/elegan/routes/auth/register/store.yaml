@@ -26,6 +26,33 @@
                 format: email
                 description: Email do usuário
                 maximum: 256
+              zipcode:
+                type: string
+                description: CEP do usuário
+                maximum: 8
+                minimum: 8
+              street:
+                type: string
+                description: Rua do usuário
+                maximum: 256
+              number:
+                type: string
+                description: Número da casa usuário
+              neighborhood:
+                type: string
+                description: Bairro do usuário
+                maximum: 256
+              state:
+                type: string
+                description: Estado do usuário
+                maximum: 32
+              city:
+                type: string
+                description: Cidade do usuário
+                maximum: 64
+              phone:
+                type: string
+                description: Telefone do usuário
               password:
                 type: string
                 description: Senha do usuário (mínimo de 8 caracteres)
