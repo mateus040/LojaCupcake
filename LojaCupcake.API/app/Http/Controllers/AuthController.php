@@ -6,8 +6,12 @@ use App\Http\Requests\User\Auth\{
     LoginRequest,
     RegisterRequest,
 };
+use App\Http\Resources\User\Auth\UserResource;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{
+    Auth,
+    Hash,
+};
 
 class AuthController extends Controller
 {
@@ -47,11 +51,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-
         $token = $user->createToken('api')->plainTextToken;
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'role' => $user->role
         ], 200);
     }
 }
