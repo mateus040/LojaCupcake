@@ -34,8 +34,8 @@ class MeController extends Controller
         ]);
 
         if (!empty($validated['password'])) {
-        $user->update(['password' => $validated['password']]);
-    }
+            $user->update(['password' => $validated['password']]);
+        }
 
         return response()->noContent();
     }
