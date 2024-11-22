@@ -61,4 +61,6 @@ npm run dev
 ```
 <br /> <br />
 Como foi mecionado, o projeto está hospedado! Tanto a API como a parte web foram hospedadas na vercel, já o banco de dados está hospedado no Railway. <br />
-Link do site: https://cupcake-shop-gamma.vercel.app/
+Link do site: https://cupcake-shop-gamma.vercel.app/ <br /> <br />
+
+**Obs: Para acessar o painel administrativo, é necessário entrar na rota /admin, e também é preciso estar logado para acessar. (Não foi criado um usuário expecifico para acessar essa rota, apenas deve estar logado.**
