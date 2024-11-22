@@ -20,7 +20,7 @@ export default function CleanLayout({ children }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
       </div>
 
-      <div className="bg-white px-12 md:px-20 lg:py-28">
+      <div className="bg-white px-12 md:px-20 lg:py-16">
         <div className="mb-10">{children}</div>
       </div>
     </div>

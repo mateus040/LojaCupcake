@@ -31,7 +31,34 @@ class RegisterRequest extends FormRequest
                 'confirmed',
                 'min:8',
                 'max:256'
-            ]
+            ],
+            'zipcode' => [
+                'string',
+                'max:8',
+                'min:8'
+            ],
+            'street' => [
+                'string',
+                'max:256',
+            ],
+            'number' => [
+                'string'
+            ],
+            'neighborhood' => [
+                'string',
+                'max:256',
+            ],
+            'state' => [
+                'string',
+                'max:32',
+            ],
+            'city' => [
+                'string',
+                'max:64'
+            ],
+            'phone' => [
+                'string'
+            ],
         ];
     }
 }

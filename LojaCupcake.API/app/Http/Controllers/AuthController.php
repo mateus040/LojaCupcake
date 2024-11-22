@@ -22,6 +22,13 @@ class AuthController extends Controller
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'zipcode' => $validated['zipcode'],
+            'street' => $validated['street'],
+            'number' => $validated['number'],
+            'neighborhood' => $validated['neighborhood'],
+            'state' => $validated['state'],
+            'city' => $validated['city'],
+            'phone' => $validated['phone'],
             'password' => $validated['password'],
         ]);
 
@@ -58,6 +65,4 @@ class AuthController extends Controller
 
         return new UserResource($user);
     }
-
-    // TODO: update (com os campos de endereço)
 }
