@@ -6,10 +6,11 @@ import Cart from "../pages/cart";
 import Checkout from "../pages/checkout";
 import Request from "../pages/request";
 import ProfileDetails from "../pages/profile-details";
-import Cupcakes from "../pages/admin/cupcakes";
+import Cupcakes from "../pages/admin/cupcakes/create";
 import PrivateRoute from "./private-routes";
 import CupcakeDetails from "../pages/details";
 import NotFound from "../pages/not-found";
+import ListCupcakes from "../pages/admin/cupcakes";
 
 export default function AppRouter() {
   return (
@@ -61,6 +62,15 @@ export default function AppRouter() {
 
         <Route
           path="/admin/cupcakes"
+          element={
+            <PrivateRoute>
+              <ListCupcakes />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/cupcakes/create"
           element={
             <PrivateRoute>
               <Cupcakes />
