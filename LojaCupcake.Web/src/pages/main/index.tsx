@@ -75,48 +75,55 @@ export default function Main() {
             <>
               {cupcakes.map((cupcake) => (
                 <div className="col-span-3" key={cupcake.id}>
-                  <Link to={`/cupcake/${cupcake.id}`}>
-                    <div className="py-7 px-8 bg-white rounded-lg">
-                      <img
-                        className="object-contain rounded-lg"
-                        src={`http://127.0.0.1:8000/storage/${cupcake.image}`}
-                        alt={cupcake.name}
-                      />
+                  <div className="py-7 px-8 bg-white rounded-lg">
+                    <img
+                      className="object-contain rounded-lg"
+                      src={`http://127.0.0.1:8000/storage/${cupcake.image}`}
+                      alt={cupcake.name}
+                    />
 
-                      <div className="mt-3">
-                        <p className="text-xl">{cupcake.name}</p>
-                        <p className="text-2xl font-bold mt-2">
-                          R${cupcake.amount}{" "}
-                          <span className="font-light text-lg">/uni</span>
-                        </p>
+                    <div className="mt-3">
+                      <p className="text-xl">{cupcake.name}</p>
+                      <p className="text-2xl font-bold mt-2">
+                        R${cupcake.amount}{" "}
+                        <span className="font-light text-lg">/uni</span>
+                      </p>
 
-                        <div className="flex items-center justify-between mt-3 space-x-2">
-                          <button
-                            onClick={() => updateQuantity(cupcake.id, -1)}
-                            className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
-                          >
-                            -
-                          </button>
-                          <span className="w-8 text-center">
-                            {quantities[cupcake.id] || 1}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(cupcake.id, 1)}
-                            className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
-                          >
-                            +
-                          </button>
-                        </div>
-
+                      <div className="flex items-center justify-between mt-3 space-x-2">
                         <button
-                          onClick={() => addToCart(cupcake)}
-                          className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
+                          onClick={() => updateQuantity(cupcake.id, -1)}
+                          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
                         >
-                          Adicionar ao carrinho
+                          -
+                        </button>
+                        <span className="w-8 text-center">
+                          {quantities[cupcake.id] || 1}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(cupcake.id, 1)}
+                          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all"
+                        >
+                          +
                         </button>
                       </div>
+
+                      <button
+                        onClick={() => addToCart(cupcake)}
+                        className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
+                      >
+                        Adicionar ao carrinho
+                      </button>
+
+                      <div className="mt-5 flex items-center justify-center">
+                        <Link
+                          to={`/cupcake/${cupcake.id}`}
+                          className="font-light underline"
+                        >
+                          Ver produto
+                        </Link>
+                      </div>
                     </div>
-                  </Link>
+                  </div>
                 </div>
               ))}
             </>
