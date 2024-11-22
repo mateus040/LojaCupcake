@@ -68,7 +68,7 @@ class CupcakeController extends Controller
         if ($request->hasFile('image')) {
             $this->firebaseStorage->deleteFile($cupcake->image);
             $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
-            $this->firebaseStorage->uploadFile($request->image, $imageName);
+            $imageUrl = $this->firebaseStorage->uploadFile($request->image, $imageName);
             $cupcake->update(['image' => $imageName]);
         }
 
