@@ -42,6 +42,7 @@ DB_PASSWORD=
 
 **6. Logo em seguida, execute esses 3 comandos, nesta mesma ordem**
 ```
+php artisan db:seed
 php artisan migrate
 php artisan key:generate
 php artisan serve
@@ -61,6 +62,8 @@ npm run dev
 ```
 <br /> <br />
 Como foi mecionado, o projeto está hospedado! Tanto a API como a parte web foram hospedadas na vercel, já o banco de dados está hospedado no Railway. <br />
-Link do site: https://cupcake-shop-gamma.vercel.app/ <br /> <br />
+Link do site: https://cupcake-shop-lime.vercel.app <br /> <br />
 
-**Obs: Para acessar o painel administrativo, é necessário entrar na rota /admin, e também é preciso estar logado para acessar. (Não foi criado um usuário expecifico para acessar essa rota, apenas deve estar logado.**
+**Obs: Para acessar o painel administrativo, é necessário entrar na rota /admin, mas apenas o usuário ADMIN poderá acessar. Com isso, o e-mail e a senha do admin são:** <br /> <br />
+Email: admin@admin.com <br />
+Senha: admin123
