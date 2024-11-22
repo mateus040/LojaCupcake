@@ -199,7 +199,7 @@ export default function Checkout() {
                           className="w-24 object-contain"
                         />
                         <div className="flex flex-col mx-5">
-                          <p>{cupcake.name}</p>
+                          <p className="break-words">{cupcake.name}</p>
                           <div className="flex items-center space-x-5">
                             <p className="mt-3">
                               Preço:{" "}

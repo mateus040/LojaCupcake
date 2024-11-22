@@ -90,7 +90,7 @@ export default function Cart() {
                       alt={cupcake.name}
                     />
                     <div className="flex flex-col items-center lg:items-start justify-center lg:justify-start mt-2 lg:mt-0 lg:ml-5">
-                      <p className="font-medium mt-5 lg:mt-0">{cupcake.name}</p>
+                      <p className="font-medium mt-5 lg:mt-0 break-words">{cupcake.name}</p>
                       <button
                         onClick={() => deleteCupcakeCart(cupcake.id)}
                         className="mt-4 w-10 h-10 flex items-center justify-center transition-all border-2 border-red-500 rounded text-red-500 hover:bg-red-500 hover:text-white"
