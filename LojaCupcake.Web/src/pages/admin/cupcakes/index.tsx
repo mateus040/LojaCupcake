@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BreadCrumb, { Page } from "../../../components/bread-crumb";
 import AdminLayout from "../../../components/layouts/admin-layout";
 import { useEffect, useState } from "react";
@@ -7,6 +7,9 @@ import CupcakeModel from "../../../interfaces/models/cupcake-model";
 import api from "../../../services/api-client";
 import ListServiceResult from "../../../interfaces/list-service-result";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import toast from "react-hot-toast";
+import ServiceResult from "../../../interfaces/service-result";
+import { getApiErrorMessage } from "../../../services/api-error-handler";
 
 export default function ListCupcakes() {
   const breadCrumbHistory: Page[] = [
@@ -20,7 +23,10 @@ export default function ListCupcakes() {
     },
   ];
 
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
 
   const [cupcakes, setCupcakes] = useState<CupcakeModel[]>([]);
 
@@ -48,6 +54,35 @@ export default function ListCupcakes() {
       .finally(() => setLoading(false));
   };
 
+  const deleteCupcake = async (cupcakeId: number) => {
+    setLoadingDelete(true);
+
+    toast
+      .promise<ServiceResult>(
+        api.delete(`/cupcakes/${cupcakeId}`),
+
+        {
+          loading: "Excluindo cupcake...",
+          success: () => {
+            const updatedProducts = cupcakes.filter(
+              (cupcake) => cupcake.id !== cupcakeId
+            );
+            setCupcakes(updatedProducts);
+            fetchCupcakes();
+            return "Cupcake excluído com sucesso!";
+          },
+          error: (error) => getApiErrorMessage(error),
+        }
+      )
+      .finally(() => {
+        setLoadingDelete(false);
+      });
+  };
+
+  const navigateToEditPage = (cupcake: CupcakeModel) => {
+    navigate(`/admin/cupcakes/edit/${cupcake.id}`);
+  };
+
   useEffect(() => {
     fetchCupcakes();
   }, []);
@@ -57,7 +92,7 @@ export default function ListCupcakes() {
       <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between mb-3">
         <BreadCrumb history={breadCrumbHistory} />
         <Link
-          to="/cupcakes/create"
+          to="/admin/cupcakes/create"
           className="rounded-full px-8 py-2 bg-gray-800 text-white hover:bg-slate-800 transition-all text-center mt-3 lg:mt-0 mb-2 lg:mb-0 w-full lg:w-[200px]"
         >
           Adicionar
@@ -129,13 +164,13 @@ export default function ListCupcakes() {
                     <td className="px-3 py-6 whitespace-nowrap flex items-center text-center">
                       <AiOutlineEdit
                         className="text-blue-600 cursor-pointer"
-                        // onClick={() => navigateToEditPage(product)}
+                        onClick={() => navigateToEditPage(cupcake)}
                         size={20}
                       />
                       <button>
                         <AiOutlineDelete
                           className="text-red-600 cursor-pointer ml-2"
-                          // onClick={() => deleteProduct(product.id)}
+                          onClick={() => deleteCupcake(cupcake.id)}
                           size={20}
                         />
                       </button>
@@ -179,15 +214,15 @@ export default function ListCupcakes() {
                   />
                 )}
                 <button
-                  // onClick={() => navigateToEditPage(cupcake)}
+                  onClick={() => navigateToEditPage(cupcake)}
                   className="rounded-full px-8 py-2 bg-slate-900 text-white hover:bg-slate-800 transition-all text-center mt-3 lg:mt-0 mb-2 lg:mb-0 w-full lg:w-[200px]"
                 >
                   Editar
                 </button>
                 <button
-                  // onClick={() => deleteProduct(product.id)}
+                  onClick={() => deleteCupcake(cupcake.id)}
                   className="rounded-full px-8 py-2 bg-slate-900 text-white hover:bg-slate-800 transition-all text-center mt-3 lg:mt-0 mb-2 lg:mb-0 w-full lg:w-[200px]"
-                  // disabled={loadingDelete}
+                  disabled={loadingDelete}
                 >
                   Deletar
                 </button>

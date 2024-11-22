@@ -11,6 +11,7 @@ import PrivateRoute from "./private-routes";
 import CupcakeDetails from "../pages/details";
 import NotFound from "../pages/not-found";
 import ListCupcakes from "../pages/admin/cupcakes";
+import EditCupcake from "../pages/admin/cupcakes/edit";
 
 export default function AppRouter() {
   return (
@@ -74,6 +75,15 @@ export default function AppRouter() {
           element={
             <PrivateRoute>
               <Cupcakes />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/cupcakes/edit/:cupcakeId"
+          element={
+            <PrivateRoute>
+              <EditCupcake />
             </PrivateRoute>
           }
         />

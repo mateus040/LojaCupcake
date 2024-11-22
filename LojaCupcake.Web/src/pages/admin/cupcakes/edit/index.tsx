@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BreadCrumb, { Page } from "../../../../components/bread-crumb";
 import AdminLayout from "../../../../components/layouts/admin-layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../../../../services/api-client";
+import ServiceResult from "../../../../interfaces/service-result";
+import CupcakeModel from "../../../../interfaces/models/cupcake-model";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import ServiceResult from "../../../../interfaces/service-result";
-import api from "../../../../services/api-client";
 import { getApiErrorMessage } from "../../../../services/api-error-handler";
 
 interface CupcakeField {
@@ -14,10 +15,10 @@ interface CupcakeField {
   ingredients: string;
   amount: string;
   quantity: string;
-  image: FileList;
+  image: File | string;
 }
 
-export default function Cupcakes() {
+export default function EditCupcake() {
   const breadCrumbHistory: Page[] = [
     {
       link: "/admin",
@@ -28,10 +29,12 @@ export default function Cupcakes() {
       name: "Cupcakes",
     },
     {
-      link: "/admin/cupcakes/create",
-      name: "Cupcakes - Criar",
+      link: "/admin/cupcakes/edit",
+      name: "Cupcakes - Editar",
     },
   ];
+
+  const { cupcakeId } = useParams();
 
   const navigate = useNavigate();
 
@@ -41,41 +44,63 @@ export default function Cupcakes() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<CupcakeField>();
 
-  const onSubmit: SubmitHandler<CupcakeField> = async (data) => {
+  const fetchCupcake = async (): Promise<void> => {
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description);
-    formData.append("ingredients", data.ingredients || "");
-    formData.append("amount", data.amount);
-    formData.append("quantity", data.quantity);
-    if (data.image.length > 0) {
-      formData.append("image", data.image[0]);
-    }
-
-    toast
-      .promise(
-        api.post<ServiceResult>("/cupcakes", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }),
-        {
-          loading: "Cadastrando produto...",
-          success: () => {
-            navigate("/admin/cupcakes");
-            return "Produto criado com sucesso!";
-          },
-          error: (error) => getApiErrorMessage(error),
-        }
-      )
+    api
+      .get<ServiceResult<CupcakeModel>>(`/cupcakes/${cupcakeId}`)
+      .then(({ data }) => {
+        const cupcake = data.data as CupcakeModel;
+        setValue("name", cupcake.name);
+        setValue("description", cupcake.description);
+        setValue("ingredients", cupcake.ingredients);
+        setValue("amount", cupcake.amount.toString());
+        setValue("quantity", cupcake.quantity);
+      })
+      .catch((error) => {
+        toast.error("Erro ao buscar dados do cupcake: ", error);
+      })
       .finally(() => {
         setLoading(false);
       });
   };
+
+  const onSubmitChange: SubmitHandler<CupcakeField> = async (data) => {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("_method", "PUT");
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("ingredients", data.ingredients);
+    formData.append("amount", data.amount);
+    formData.append("quantity", data.quantity);
+
+    if (data.image instanceof File) {
+      formData.append("image", data.image);
+    }
+
+    toast
+      .promise(
+        api.post<ServiceResult>(`/cupcakes/${cupcakeId}`, formData),
+        {
+          loading: "Editando cupcake...",
+          success: () => {
+            navigate("/admin/cupcakes");
+            return "Cupcake editado com sucesso!";
+          },
+          error: (error) => getApiErrorMessage(error),
+        }
+      )
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchCupcake();
+  }, [cupcakeId]);
 
   return (
     <AdminLayout>
@@ -83,10 +108,7 @@ export default function Cupcakes() {
         <BreadCrumb history={breadCrumbHistory} />
       </div>
 
-      <p className="font-medium text-slate-600 mt-8">
-        Campos com (*) são obrigatórios
-      </p>
-      <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
+      <form className="mt-3" onSubmit={handleSubmit(onSubmitChange)}>
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-3 mb-6">
           <div className="col-span-12">
             <label className="block mb-2 font-medium">Nome*</label>
@@ -98,6 +120,7 @@ export default function Cupcakes() {
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               {...register("name", { required: "O nome é obrigatório" })}
+              disabled={loading}
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -113,6 +136,7 @@ export default function Cupcakes() {
                 errors.description ? "border-red-500" : "border-gray-300"
               }`}
               {...register("description", { required: "A descrição é obrigatória" })}
+              disabled={loading}
             />
             {errors.description && (
               <p className="text-red-500 text-sm">{errors.description.message}</p>
@@ -128,6 +152,7 @@ export default function Cupcakes() {
                 errors.ingredients ? "border-red-500" : "border-gray-300"
               }`}
               {...register("ingredients", { required: "Os ingredientes são obrigatórios" })}
+              disabled={loading}
             />
             {errors.ingredients && (
               <p className="text-red-500 text-sm">{errors.ingredients.message}</p>
@@ -143,6 +168,7 @@ export default function Cupcakes() {
                 errors.amount ? "border-red-500" : "border-gray-300"
               }`}
               {...register("amount", { required: "O preço é obrigatório" })}
+              disabled={loading}
             />
             {errors.amount && (
               <p className="text-red-500 text-sm">{errors.amount.message}</p>
@@ -158,6 +184,7 @@ export default function Cupcakes() {
                 errors.quantity ? "border-red-500" : "border-gray-300"
               }`}
               {...register("quantity", { required: "A qauntidade é obrigatória" })}
+              disabled={loading}
             />
             {errors.quantity && (
               <p className="text-red-500 text-sm">{errors.quantity.message}</p>
@@ -169,13 +196,9 @@ export default function Cupcakes() {
               type="file"
               id="image"
               {...register("image", { required: "A imagem é obrigatória" })}
-              className={`w-full p-2 rounded-lg border ${
-                errors.image ? "border-red-500" : "border-gray-300"
-              }`}
+              className={`w-full p-2 rounded-lg border`}
+              disabled={loading}
             />
-            {errors.image && (
-              <p className="text-red-500 text-sm">{errors.image.message}</p>
-            )}
           </div>
         </div>
 
@@ -185,10 +208,10 @@ export default function Cupcakes() {
             className="rounded-full px-8 py-2 bg-slate-900 text-white hover:bg-slate-800 transition-all"
             disabled={loading}
           >
-            Cadastrar
+            Editar
           </button>
         </div>
       </form>
     </AdminLayout>
-  );
+  )
 }
