@@ -54,31 +54,28 @@ class CupcakeController extends Controller
     }
 
     public function update(CupcakeRequest $request, Cupcake $cupcake)
-{
-    $validated = $request->validated();
+    {
+        $validated = $request->validated();
 
-    // Atualizar os dados do cupcake
-    $cupcake->update([
-        'name' => $validated['name'],
-        'description' => $validated['description'],
-        'ingredients' => $validated['ingredients'],
-        'amount' => $validated['amount'],
-        'quantity' => $validated['quantity'],
-    ]);
+        $cupcake->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'ingredients' => $validated['ingredients'],
+            'amount' => $validated['amount'],
+            'quantity' => $validated['quantity'],
+        ]);
 
-    if ($request->hasFile('image')) {
-        if ($cupcake->image) {
+        if ($request->hasFile('image')) {
             $this->firebaseStorage->deleteFile($cupcake->image);
+            $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
+            $imageUrl = $this->firebaseStorage->uploadFile($request->image, $imageName);
+            $cupcake->update(['image' => $imageName]);
         }
 
-        $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
-        $imageUrl = $this->firebaseStorage->uploadFile($request->image, $imageName);
-        
-        $cupcake->update(['image' => $imageName]);
-    }
+        $imageUrl = isset($imageUrl) ? $imageUrl : null;
 
-    return response()->noContent();
-}
+        return response()->noContent();
+    }
 
     public function destroy(Cupcake $cupcake)
     {
