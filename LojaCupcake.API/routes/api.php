@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     CartController,
     CheckoutController,
     CupcakeController,
+    DashboardController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [CheckoutController::class, 'index']);
         Route::post('/', [CheckoutController::class, 'checkout']);
     });
+
+    Route::get('/dashboard', [DashboardController::class, 'getCount']);
 });

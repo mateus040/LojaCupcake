@@ -39,3 +39,6 @@ paths:
 
   /checkout:
     $ref: "./routes/checkout/actions.yaml"
+
+  /dashboard:
+    $ref: "./routes/dashboard/actions.yaml"
