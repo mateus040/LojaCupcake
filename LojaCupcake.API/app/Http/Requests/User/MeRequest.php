@@ -30,11 +30,6 @@ class MeRequest extends FormRequest
                 Rule::unique('users')->ignore($user->id),
                 'max:256',
             ],
-            'password' => [
-                'confirmed',
-                'min:8',
-                'max:256'
-            ],
             'zipcode' => [
                 'string',
                 'max:8',
@@ -63,5 +58,12 @@ class MeRequest extends FormRequest
                 'string'
             ],
         ];
+
+        // Se a senha for fornecida, validar a senha
+        if ($this->filled('password')) {
+            $rules['password'] = 'confirmed|min:8|max:256';
+        }
+
+        return $rules;
     }
 }
