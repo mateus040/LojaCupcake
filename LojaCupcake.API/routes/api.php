@@ -6,16 +6,13 @@ use App\Http\Controllers\{
     CheckoutController,
     CupcakeController,
     DashboardController,
+    MeController,
 };
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/me', [AuthController::class, 'me']);
-    });
 });
 
 Route::prefix('/cupcakes')->group(function () {
@@ -24,6 +21,11 @@ Route::prefix('/cupcakes')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/me', [MeController::class, 'me']);
+        Route::put('/me', [MeController::class, 'update']);
+    });
+
     Route::prefix('/cupcakes')->group(function () {
         Route::post('/', [CupcakeController::class, 'store']);
         Route::put('/{cupcake}', [CupcakeController::class, 'update']);

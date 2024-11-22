@@ -58,11 +58,4 @@ class AuthController extends Controller
             'token' => $token
         ], 200);
     }
-
-    public function me()
-    {
-        $user = Auth::user();
-
-        return new UserResource($user);
-    }
 }
