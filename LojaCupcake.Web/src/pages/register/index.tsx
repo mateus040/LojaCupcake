@@ -64,14 +64,14 @@ export default function Register() {
   return (
     <CleanLayout>
       <img
-        src="/images/cupcake.png"
+        src="/images/cupcake1.png"
         alt="logo"
         className="w-24 mx-auto lg:hidden mt-10"
       />
 
       <div className="flex flex-col items-center justify-center mt-5">
         <h2 className="text-3xl text-center font-semibold leading-tight text-black sm:text-4xl">
-          CupcakeStore
+          Cupcake Shop
         </h2>
 
         <p className="mt-3 text-xl font-light">Registre sua conta</p>

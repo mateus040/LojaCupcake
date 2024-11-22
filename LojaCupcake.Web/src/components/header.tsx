@@ -29,8 +29,8 @@ export const Header = () => {
           className="cursor-pointer"
         >
           <div className="flex items-center">
-            <img src="/images/cupcake.png" alt="logo" className="h-12 w-12" />
-            <p className="mx-3 mt-2 font-light text-xl">CupcakeStore</p>
+            <img src="/images/cupcake1.png" alt="logo" className="h-16 w-16" />
+            <p className="mx-3 mt-2 font-light text-xl">Cupcake Shop</p>
           </div>
         </a>
         <div

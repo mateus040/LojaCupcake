@@ -29,10 +29,10 @@ export const Sidebar = ({ isSidebarOpen }: Props) => {
     >
       <div className="h-full flex flex-col bg-gray-800 min-h-screen">
         <div className="p-4 pb-2 flex items-center justify-center lg:justify-start">
-          <img src="/images/cupcake.png" className="w-12 h-12 rounded-md" />
+          <img src="/images/cupcake1.png" className="w-12 h-12 rounded-md" />
           <p className="hidden lg:flex mx-2 font-semibold text-gray-300">
             <span className={`mt-2 ${isSidebarOpen ? "hidden" : "block"}`}>
-              Cupcake Store
+              Cupcake Shop
             </span>
           </p>
         </div>

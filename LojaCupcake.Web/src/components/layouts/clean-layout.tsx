@@ -13,8 +13,8 @@ export default function CleanLayout({ children }: Props) {
             alt=""
           />
           <div className="relative flex items-center justify-center mt-8">
-            <img className="w-20" src="/images/cupcake.png" alt="" />
-            <p className="mt-2 mx-3 text-[28px] font-light">CupcakeStore</p>
+            <img className="w-20" src="/images/cupcake1.png" alt="" />
+            <p className="mt-2 mx-3 text-[28px] font-light">Cupcake Shop</p>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
