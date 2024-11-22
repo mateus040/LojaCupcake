@@ -31,7 +31,6 @@ class MeRequest extends FormRequest
                 'max:256',
             ],
             'password' => [
-                'required',
                 'confirmed',
                 'min:8',
                 'max:256'
