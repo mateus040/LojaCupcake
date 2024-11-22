@@ -53,10 +53,6 @@
                   description: Nova quantidade do cupcake
                   minimum: 0
                   maximum: 2147483647
-                image:
-                  type: string
-                  format: binary
-                  description: Nova imagem do cupcake
               required:
                 - name
                 - description
