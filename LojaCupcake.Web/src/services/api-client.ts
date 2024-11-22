@@ -3,7 +3,6 @@ import AuthModel from "../interfaces/models/auth-model";
 
 const defaultOptions = {
   baseURL: "http://127.0.0.1:8000/api",
-  // baseURL: "https://loja-cupcake-api.vercel.app/api/api",
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",

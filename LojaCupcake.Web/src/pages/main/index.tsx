@@ -13,7 +13,6 @@ export default function Main() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [cupcakes, setCupcakes] = useState<CupcakeModel[]>([]);
-  const [images, setImages] = useState<{ [key: string]: string }>({});
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   const fetchCupcakes = async (): Promise<void> => {
@@ -25,17 +24,12 @@ export default function Main() {
         const cupcakesData = data.data;
         setCupcakes(cupcakesData);
 
-        const imagesTemp: { [key: string]: string } = {};
         const initialQuantities: { [key: number]: number } = {};
 
         cupcakesData.forEach((cupcake) => {
-          if (cupcake.image) {
-            imagesTemp[cupcake.image] = cupcake.image_url;
-          }
           initialQuantities[cupcake.id] = 1;
         });
 
-        setImages(imagesTemp);
         setQuantities(initialQuantities);
       })
       .finally(() => setLoading(false));
@@ -81,17 +75,13 @@ export default function Main() {
             <>
               {cupcakes.map((cupcake) => (
                 <div className="col-span-3" key={cupcake.id}>
-                  <Link
-                    to={`/cupcake/${cupcake.id}`}
-                  >
+                  <Link to={`/cupcake/${cupcake.id}`}>
                     <div className="py-7 px-8 bg-white rounded-lg">
-                      {images[cupcake.image] && (
-                        <img
-                          className="object-contain rounded-lg"
-                        src={images[cupcake.image]}
-                          alt={cupcake.name}
-                        />
-                      )}
+                      <img
+                        className="object-contain rounded-lg"
+                        src={`http://127.0.0.1:8000/storage/${cupcake.image}`}
+                        alt={cupcake.name}
+                      />
 
                       <div className="mt-3">
                         <p className="text-xl">{cupcake.name}</p>
