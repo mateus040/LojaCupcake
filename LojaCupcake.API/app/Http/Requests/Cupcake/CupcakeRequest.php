@@ -44,7 +44,7 @@ class CupcakeRequest extends FormRequest
             'image' => [
                 'sometimes',
                 'image',
-                'mimes:peg,png,jpg,gif,svg,webp',
+                'mimes:jpeg,png,jpg,gif,svg,webp',
                 'max:2048',
             ],
         ];
