@@ -24,7 +24,7 @@ export default function CupcakeDetails() {
       .get<ServiceResult<CupcakeModel>>(`/cupcakes/${cupcakeId}`)
       .then(({ data }) => {
         setCupcake(data.data as CupcakeModel);
-        setImageUrl(data.data?.image || null);
+        setImageUrl(data.data?.image_url || null);
       })
       .finally(() => setLoading(false));
   };

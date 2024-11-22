@@ -81,14 +81,12 @@ export default function Main() {
             <>
               {cupcakes.map((cupcake) => (
                 <div className="col-span-3" key={cupcake.id}>
-                  <Link
-                    to={`/cupcake/${cupcake.id}`}
-                  >
+                  <Link to={`/cupcake/${cupcake.id}`}>
                     <div className="py-7 px-8 bg-white rounded-lg">
                       {images[cupcake.image] && (
                         <img
-                          className="object-contain rounded-lg"
-                        src={images[cupcake.image]}
+                          className="w-full rounded-lg"
+                          src={images[cupcake.image]}
                           alt={cupcake.name}
                         />
                       )}
