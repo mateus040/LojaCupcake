@@ -3,8 +3,8 @@ import { format } from "date-fns";
 export const Footer = () => {
   return (
     <div className="bg-white shadow-lg">
-      <div className="px-8 lg:px-24 py-6 container mx-auto">
-        <div className="flex items-center justify-between mb-6 xl:-ms-20 flex-col lg:flex-row">
+      <div className="px-8 lg:px-24 py-4 container mx-auto">
+        <div className="flex items-center justify-between mb-4 xl:-ms-20 flex-col lg:flex-row">
           <div className="flex items-center space-x-3 mb-4 lg:mb-0 -ms-6 xl:-ms-0">
             <img src="/images/cupcake.png" className="h-[70px]" />
             <p className="mx-3 mt-2 font-light text-xl">CupcakeStore</p>

@@ -57,6 +57,12 @@ return [
             'throw' => false,
         ],
 
+        'firebase' => [
+            'driver' => 'firebase',
+            'credentials' => storage_path('app/firebase-credentials.json'),
+            'bucket' => env('FIREBASE_STORAGE_BUCKET'),
+        ],
+
     ],
 
     /*

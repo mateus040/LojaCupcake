@@ -6,10 +6,17 @@ use App\Http\Requests\Cupcake\CupcakeRequest;
 use App\Http\Resources\Cupcake\CupcakeInfoResource;
 use App\Http\Resources\Cupcake\CupcakeResource;
 use App\Models\Cupcake;
-use Illuminate\Support\Facades\Storage;
+use App\Services\FirebaseStorageService;
+use Illuminate\Support\Str;
 
 class CupcakeController extends Controller
 {
+    protected $firebaseStorage;
+
+    public function __construct(FirebaseStorageService $firebaseStorage)
+    {
+        $this->firebaseStorage = $firebaseStorage;
+    }
     public function index()
     {
         $cupcakes = Cupcake::all();
@@ -21,15 +28,8 @@ class CupcakeController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request
-                ->file('image')
-                ->store('public/cupcakes');
-    
-            $request
-                ->file('image')
-                ->storeAs('', $imagePath, 'local');
-        }
+        $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
+        $this->firebaseStorage->uploadFile($request->image, $imageName);
 
         Cupcake::create([
             'name' => $validated['name'],
@@ -37,7 +37,7 @@ class CupcakeController extends Controller
             'ingredients' => $validated['ingredients'],
             'amount' => $validated['amount'],
             'quantity' => $validated['quantity'],
-            'image' => $imagePath,
+            'image' => $imageName,
         ]);
 
         return response()->json([
@@ -54,33 +54,27 @@ class CupcakeController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->hasFile('image')) {
-            if ($cupcake->image) {
-                Storage::disk('public')->delete($cupcake->image);
-            }
-
-            $imagePath = $request
-                ->file('image')
-                ->store('cupcakes', 'public');
-        }
-
         $cupcake->update([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'ingredients' => $validated['ingredients'],
             'amount' => $validated['amount'],
             'quantity' => $validated['quantity'],
-            'image' => $imagePath ?? $cupcake->image
         ]);
+
+        if ($request->hasFile('image')) {
+            $this->firebaseStorage->deleteFile($cupcake->image);
+            $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
+            $this->firebaseStorage->uploadFile($request->image, $imageName);
+            $cupcake->update(['image' => $imageName]);
+        }
 
         return response()->noContent();
     }
 
     public function destroy(Cupcake $cupcake)
     {
-        if ($cupcake->image) {
-            Storage::disk('public')->delete($cupcake->image);
-        }
+        $this->firebaseStorage->deleteFile($cupcake->foto);
 
         $cupcake->delete();
 
