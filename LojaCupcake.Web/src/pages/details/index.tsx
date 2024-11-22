@@ -78,7 +78,7 @@ export default function CupcakeDetails() {
                 </div>
 
                 <div className="col-span-6">
-                  <p className="text-4xl font-bold uppercase mb-1">
+                  <p className="text-4xl font-bold uppercase mb-1 break-words">
                     {cupcake?.name}
                   </p>
                   <p className="mt-5 font-bold text-lg">

@@ -83,7 +83,7 @@ export default function Main() {
                     />
 
                     <div className="mt-3">
-                      <p className="text-xl">{cupcake.name}</p>
+                      <p className="text-xl truncate">{cupcake.name}</p>
                       <p className="text-2xl font-bold mt-2">
                         R${cupcake.amount}{" "}
                         <span className="font-light text-lg">/uni</span>

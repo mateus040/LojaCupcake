@@ -15,7 +15,6 @@ interface CupcakeField {
   ingredients: string;
   amount: string;
   quantity: string;
-  image: File | string;
 }
 
 export default function EditCupcake() {
@@ -78,10 +77,6 @@ export default function EditCupcake() {
     formData.append("ingredients", data.ingredients);
     formData.append("amount", data.amount);
     formData.append("quantity", data.quantity);
-
-    if (data.image instanceof File) {
-      formData.append("image", data.image);
-    }
 
     toast
       .promise(
@@ -158,7 +153,7 @@ export default function EditCupcake() {
               <p className="text-red-500 text-sm">{errors.ingredients.message}</p>
             )}
           </div>
-          <div className="col-span-12 xl:col-span-4">
+          <div className="col-span-12 xl:col-span-6">
             <label className="block mb-2 font-medium">Preço*</label>
             <input
               type="text"
@@ -174,7 +169,7 @@ export default function EditCupcake() {
               <p className="text-red-500 text-sm">{errors.amount.message}</p>
             )}
           </div>
-          <div className="col-span-12 xl:col-span-4">
+          <div className="col-span-12 xl:col-span-6">
             <label className="block mb-2 font-medium">Quantidade*</label>
             <input
               type="text"
@@ -189,16 +184,6 @@ export default function EditCupcake() {
             {errors.quantity && (
               <p className="text-red-500 text-sm">{errors.quantity.message}</p>
             )}
-          </div>
-          <div className="col-span-12 xl:col-span-4">
-            <label className="block mb-2 font-medium">Foto*</label>
-            <input
-              type="file"
-              id="image"
-              {...register("image", { required: "A imagem é obrigatória" })}
-              className={`w-full p-2 rounded-lg border`}
-              disabled={loading}
-            />
           </div>
         </div>
 
