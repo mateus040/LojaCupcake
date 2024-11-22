@@ -65,7 +65,7 @@ export default function AppRouter() {
         <Route
           path="/admin"
           element={
-            <PrivateRoute>
+            <PrivateRoute adminOnly={true}>
               <Dashboard />
             </PrivateRoute>
           }
@@ -74,7 +74,7 @@ export default function AppRouter() {
         <Route
           path="/admin/cupcakes"
           element={
-            <PrivateRoute>
+            <PrivateRoute adminOnly={true}>
               <ListCupcakes />
             </PrivateRoute>
           }
@@ -83,7 +83,7 @@ export default function AppRouter() {
         <Route
           path="/admin/cupcakes/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute adminOnly={true}>
               <Cupcakes />
             </PrivateRoute>
           }
@@ -92,7 +92,7 @@ export default function AppRouter() {
         <Route
           path="/admin/cupcakes/edit/:cupcakeId"
           element={
-            <PrivateRoute>
+            <PrivateRoute adminOnly={true}>
               <EditCupcake />
             </PrivateRoute>
           }

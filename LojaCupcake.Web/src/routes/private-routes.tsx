@@ -5,25 +5,31 @@ import { AuthValidation, useAuthCheck } from "../hooks/use-auth-check";
 
 interface Props {
   children: React.ReactNode;
+  adminOnly?: boolean;
 }
 
-export default function PrivateRoute({ children }: Props) {
+export default function PrivateRoute({ children, adminOnly = false }: Props) {
   const navigate = useNavigate();
   const authValidation: AuthValidation = useAuthCheck();
 
   useEffect(() => {
     if (!authValidation.hasToken) {
       navigate("/login");
-    } else if (authValidation.expired) {
+    } 
+    else if (authValidation.expired) {
       navigate("/login");
-      toast.error("Sua sessão expirou faça login novamente");
+      toast.error("Sua sessão expirou. Faça login novamente.");
+    } 
+    else if (adminOnly && authValidation.role !== "admin") {
+      navigate("/");
+      toast.error("Acesso restrito para administradores.");
     }
-  }, [authValidation, navigate]);
+  }, [authValidation, navigate, adminOnly]);
 
   return (
     <>
       {!authValidation.hasToken && <Navigate to="/login" replace />}
-      {authValidation.hasToken && children}
+      {authValidation.hasToken && (!adminOnly || authValidation.role === "admin") && children}
     </>
   );
 }

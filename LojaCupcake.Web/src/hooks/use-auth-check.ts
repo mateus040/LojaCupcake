@@ -3,6 +3,7 @@ import AuthModel from "../interfaces/models/auth-model";
 export interface AuthValidation {
   hasToken: boolean;
   expired: boolean;
+  role: string | null;
 }
 
 function validateExpiredToken(tokenExpirationDate: string): boolean {
@@ -12,7 +13,7 @@ function validateExpiredToken(tokenExpirationDate: string): boolean {
 }
 
 export const useAuthCheck = (): AuthValidation => {
-  const data: AuthValidation = { expired: false, hasToken: false };
+  const data: AuthValidation = { expired: false, hasToken: false, role: null };
   const authCache: string | null = sessionStorage.getItem("auth");
 
   if (!authCache) {
@@ -28,9 +29,11 @@ export const useAuthCheck = (): AuthValidation => {
   if (expired) {
     sessionStorage.clear();
     data.expired = true;
+    data.role = null;
     return data;
   } else {
     data.expired = false;
+    data.role = token.role;
     return data;
   }
 };

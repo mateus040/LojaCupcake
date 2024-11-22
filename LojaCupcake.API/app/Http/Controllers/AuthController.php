@@ -51,11 +51,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-
         $token = $user->createToken('api')->plainTextToken;
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'role' => $user->role
         ], 200);
     }
 }

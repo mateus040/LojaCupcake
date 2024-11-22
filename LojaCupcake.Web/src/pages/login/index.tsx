@@ -27,8 +27,8 @@ export default function Login() {
 
     api
       .postForm("/auth/login", data)
-      .then(({ data: { token } }) => {
-        sessionStorage.setItem("auth", JSON.stringify({ token }));
+      .then(({ data: { token, role } }) => {
+        sessionStorage.setItem("auth", JSON.stringify({ token, role }));
         navigate("/");
         toast.success("Bem-vindo!");
       })
