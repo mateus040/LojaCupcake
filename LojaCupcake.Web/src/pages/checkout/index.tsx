@@ -194,7 +194,7 @@ export default function Checkout() {
                     >
                       <div className="flex">
                         <img
-                          src={cupcake.image}
+                          src={cupcake.image_url}
                           alt={cupcake.name}
                           className="w-24 object-contain"
                         />
