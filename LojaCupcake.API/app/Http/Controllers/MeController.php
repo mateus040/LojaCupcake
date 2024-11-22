@@ -31,8 +31,11 @@ class MeController extends Controller
             'state' => $validated['state'],
             'city' => $validated['city'],
             'phone' => $validated['phone'],
-            'password' => $validated['password'],
         ]);
+
+        if (!empty($validated['password'])) {
+        $user->update(['password' => $validated['password']]);
+    }
 
         return response()->noContent();
     }
