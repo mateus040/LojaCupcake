@@ -68,15 +68,15 @@ export default function ProfileDetails() {
       state: data.state,
       city: data.city,
       phone: data.phone,
-      password: data.password,
-      password_confirmation: data.password_confirmation,
+      password: data.password ? data.password : undefined,
+      password_confirmation: data.password_confirmation ? data.password_confirmation : undefined,
     };
 
     toast
       .promise(api.put<ServiceResult>("/me", updatedData), {
         loading: "Editando perfil...",
         success: () => {
-          navigate("/profile-details");
+          navigate(0);
           return "Perfil editado com sucesso!";
         },
         error: (error) => getApiErrorMessage(error),
