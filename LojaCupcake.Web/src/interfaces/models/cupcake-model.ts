@@ -6,4 +6,5 @@ export default interface CupcakeModel {
   amount: number;
   quantity: string;
   image: string;
+  image_url: string;
 }

@@ -29,8 +29,9 @@ export default function Main() {
         const initialQuantities: { [key: number]: number } = {};
 
         cupcakesData.forEach((cupcake) => {
-          const imageUrl = `/storage/cupcakes/${cupcake.image}`;
-          imagesTemp[cupcake.image] = imageUrl;
+          if (cupcake.image) {
+            imagesTemp[cupcake.image] = cupcake.image_url;
+          }
           initialQuantities[cupcake.id] = 1;
         });
 
@@ -87,8 +88,7 @@ export default function Main() {
                       {images[cupcake.image] && (
                         <img
                           className="object-contain rounded-lg"
-                          src={images[cupcake.image]}
-                          // src="/images/cupcake-chocolate.png"
+                        src={images[cupcake.image]}
                           alt={cupcake.name}
                         />
                       )}
