@@ -29,7 +29,7 @@ class CupcakeController extends Controller
         $validated = $request->validated();
 
         $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
-        $this->firebaseStorage->uploadFile($request->image, $imageName);
+        $imageUrl = $this->firebaseStorage->uploadFile($request->image, $imageName);
 
         Cupcake::create([
             'name' => $validated['name'],
@@ -41,7 +41,8 @@ class CupcakeController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Cupcake successfully registered.'
+            'message' => 'Cupcake successfully registered.',
+            'image_url' => $imageUrl
         ], 201);
     }
 
@@ -69,12 +70,14 @@ class CupcakeController extends Controller
             $cupcake->update(['image' => $imageName]);
         }
 
+        $imageUrl = isset($imageUrl) ? $imageUrl : null;
+
         return response()->noContent();
     }
 
     public function destroy(Cupcake $cupcake)
     {
-        $this->firebaseStorage->deleteFile($cupcake->foto);
+        $this->firebaseStorage->deleteFile($cupcake->image);
 
         $cupcake->delete();
 
