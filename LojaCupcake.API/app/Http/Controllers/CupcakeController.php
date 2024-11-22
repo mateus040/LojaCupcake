@@ -19,9 +19,11 @@ class CupcakeController extends Controller
     }
     public function index()
     {
-        $cupcakes = Cupcake::all();
+        $cupcakes = Cupcake::get();
 
-        return CupcakeResource::collection($cupcakes);
+        return response()->json([
+            'data' => $cupcakes
+        ], 200);
     }
 
     public function store(CupcakeRequest $request)

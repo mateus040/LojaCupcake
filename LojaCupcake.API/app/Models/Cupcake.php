@@ -21,7 +21,7 @@ class Cupcake extends Model
 
     protected $appends = ['image_url'];
 
-    public function getFotoUrlAttribute()
+    public function getImageUrlAttribute()
     {
         $firebaseStorage = app(FirebaseStorageService::class);
         return $firebaseStorage->getFileUrl($this->image);
