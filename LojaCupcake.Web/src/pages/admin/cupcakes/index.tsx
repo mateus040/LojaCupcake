@@ -10,6 +10,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import toast from "react-hot-toast";
 import ServiceResult from "../../../interfaces/service-result";
 import { getApiErrorMessage } from "../../../services/api-error-handler";
+import { formatCurrency } from "../../../utils/format-currency";
 
 export default function ListCupcakes() {
   const breadCrumbHistory: Page[] = [
@@ -147,7 +148,7 @@ export default function ListCupcakes() {
                         : cupcake.ingredients}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                      {cupcake.amount}
+                      {formatCurrency(cupcake.amount)}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {cupcake.quantity}

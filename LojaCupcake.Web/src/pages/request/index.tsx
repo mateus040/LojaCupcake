@@ -5,7 +5,11 @@ import ListServiceResult from "../../interfaces/list-service-result";
 import api from "../../services/api-client";
 import { format } from "date-fns";
 import Loading from "../../components/loading";
-import { getDeliveryTypeLabel, getPaymentTypeLabel } from "../../utils/convert-velues-enum";
+import {
+  getDeliveryTypeLabel,
+  getPaymentTypeLabel,
+} from "../../utils/convert-velues-enum";
+import { formatCurrency } from "../../utils/format-currency";
 
 export default function Request() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -73,13 +77,13 @@ export default function Request() {
                       {request.name}
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
-                      {request.amount}
+                      {formatCurrency(request.amount)}
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
                       {request.quantity}
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
-                      {request.total_amount}
+                      {formatCurrency(request.total_amount)}
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
                       {getPaymentTypeLabel(request.payment_type)}

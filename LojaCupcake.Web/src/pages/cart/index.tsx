@@ -6,6 +6,7 @@ import CartModel from "../../interfaces/models/cart-model";
 import api from "../../services/api-client";
 import ListServiceResult from "../../interfaces/list-service-result";
 import Loading from "../../components/loading";
+import { formatCurrency } from "../../utils/format-currency";
 
 export default function Cart() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -90,7 +91,9 @@ export default function Cart() {
                       alt={cupcake.name}
                     />
                     <div className="flex flex-col items-center lg:items-start justify-center lg:justify-start mt-2 lg:mt-0 lg:ml-5">
-                      <p className="font-medium mt-5 lg:mt-0 break-words">{cupcake.name}</p>
+                      <p className="font-medium mt-5 lg:mt-0 break-words">
+                        {cupcake.name}
+                      </p>
                       <button
                         onClick={() => deleteCupcakeCart(cupcake.id)}
                         className="mt-4 w-10 h-10 flex items-center justify-center transition-all border-2 border-red-500 rounded text-red-500 hover:bg-red-500 hover:text-white"
@@ -132,7 +135,7 @@ export default function Cart() {
                       Subtotal
                     </p>
                     <p className="font-medium flex items-center justify-center">
-                      R${cupcake.amount * quantity}
+                      {formatCurrency(cupcake.amount * quantity)}
                     </p>
                   </div>
                 </div>
@@ -151,7 +154,9 @@ export default function Cart() {
         )}
 
         {!loading && cupcakesCart.length === 0 && (
-          <p className="mt-6 flex items-center justify-center">O carrinho está vazio</p>
+          <p className="mt-6 flex items-center justify-center">
+            O carrinho está vazio
+          </p>
         )}
       </div>
     </MainLayout>

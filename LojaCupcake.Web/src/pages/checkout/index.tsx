@@ -10,6 +10,7 @@ import ListServiceResult from "../../interfaces/list-service-result";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { formatCurrency } from "../../utils/format-currency";
 
 interface DataField {
   delivery_type: string;
@@ -204,7 +205,7 @@ export default function Checkout() {
                             <p className="mt-3">
                               Preço:{" "}
                               <span className="font-semibold">
-                                R${cupcake.amount}
+                                {formatCurrency(cupcake.amount)}
                               </span>
                             </p>
                             <p className="mt-3">

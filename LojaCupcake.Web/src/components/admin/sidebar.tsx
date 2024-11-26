@@ -39,7 +39,7 @@ export const Sidebar = ({ isSidebarOpen }: Props) => {
         <ul className="flex-1 p-4 lg:p-2">
           <li
             className={`flex items-center justify-center py-3 lg:py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
-              isActive("/admin")
+              isActive("/")
                 ? `${!isSidebarOpen ? "bg-slate-600 text-white" : ""}`
                 : "hover:bg-slate-600 hover:text-white text-gray-300"
             } mb-2`}
