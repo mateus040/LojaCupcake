@@ -6,6 +6,7 @@ import api from "../../services/api-client";
 import ServiceResult from "../../interfaces/service-result";
 import apiErrorHandler from "../../services/api-error-handler";
 import Loading from "../../components/loading";
+import { formatCurrency } from "../../utils/format-currency";
 
 export default function CupcakeDetails() {
   const { cupcakeId } = useParams();
@@ -14,6 +15,7 @@ export default function CupcakeDetails() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [cupcake, setCupcake] = useState<CupcakeModel>();
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   const fetchCupcake = async () => {
@@ -23,6 +25,7 @@ export default function CupcakeDetails() {
       .get<ServiceResult<CupcakeModel>>(`/cupcakes/${cupcakeId}`)
       .then(({ data }) => {
         setCupcake(data.data as CupcakeModel);
+        setImageUrl(data.data?.image_url || null);
       })
       .finally(() => setLoading(false));
   };
@@ -68,12 +71,12 @@ export default function CupcakeDetails() {
               className="px-8 lg:px-12 py-12 mt-10 container mx-auto"
               data-aos="zoom-in"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div className="col-span-6 flex items-center justify-center lg:-ms-36">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div className="col-span-6 flex items-center justify-center h-96">
                   <img
-                    src={`http://127.0.0.1:8000/storage/${cupcake?.image}`}
-                    className="h-80 object-contain"
+                    src={imageUrl || ""}
                     alt={cupcake?.name}
+                    className="w-full h-full object-cover object-center rounded-md"
                   />
                 </div>
 
@@ -91,7 +94,9 @@ export default function CupcakeDetails() {
                   </p>
                   <p className="mt-8 font-bold text-2xl">
                     Preço:{" "}
-                    <span className="font-normal">R$ {cupcake?.amount}</span>
+                    <span className="font-normal">
+                      {formatCurrency(cupcake?.amount || 0)}
+                    </span>
                   </p>
 
                   <div className="flex items-center justify-start mt-3 space-x-2">
