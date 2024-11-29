@@ -1,6 +1,6 @@
 
       tags:
-        - 'Dashboard'
+        - 'Admin - Dashboard'
       summary: 'Retornar contagem dos dados'
       security:
         - bearerAuth: []

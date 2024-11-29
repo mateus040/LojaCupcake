@@ -168,14 +168,12 @@ export default function Cupcakes() {
             <input
               type="file"
               id="image"
-              {...register("image", { required: "A imagem é obrigatória" })}
+              {...register("image")}
               className={`w-full p-2 rounded-lg border ${
                 errors.image ? "border-red-500" : "border-gray-300"
               }`}
             />
-            {errors.image && (
-              <p className="text-red-500 text-sm">{errors.image.message}</p>
-            )}
+
           </div>
         </div>
 

@@ -7,6 +7,7 @@ import ServiceResult from "../../interfaces/service-result";
 import apiErrorHandler from "../../services/api-error-handler";
 import Loading from "../../components/loading";
 import { formatCurrency } from "../../utils/format-currency";
+import CupcakeStatusType from "../../enums/cupcake-status-type";
 
 export default function CupcakeDetails() {
   const { cupcakeId } = useParams();
@@ -116,12 +117,18 @@ export default function CupcakeDetails() {
                       +
                     </button>
                   </div>
-                  <button
-                    onClick={() => addToCart(cupcake as CupcakeModel)}
-                    className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
-                  >
-                    Adicionar ao carrinho
-                  </button>
+                  {cupcake?.status === CupcakeStatusType.IN_STOCK ? (
+                    <button
+                      onClick={() => addToCart(cupcake as CupcakeModel)}
+                      className="text-medium bg-transparent text-black border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white w-full p-2 mt-5 rounded transition-all"
+                    >
+                      Adicionar ao carrinho
+                    </button>
+                  ) : (
+                    <div className="text-medium text-center bg-zinc-700 text-zinc-200 uppercase font-semibold w-full p-2 mt-5 rounded transition-all">
+                      Fora de estoque
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -48,6 +48,38 @@ export default function Dashboard() {
             </div>
           </Link>
         </div>
+        <div className="col-span-1 lg:col-span-4">
+          <Link to="/admin/requests">
+            <div className="bg-white shadow-lg w-full py-4 px-5">
+              <p className="text-sm font-medium">Pedidos cadastrados</p>
+              <div className="mt-2">
+                {loading && <Loading className="mt-2 mb-2" />}
+
+                {!loading && (
+                  <p className="text-4xl font-medium">
+                    {cards?.requestsCount !== 0 ? cards?.requestsCount : 0}
+                  </p>
+                )}
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="col-span-1 lg:col-span-4">
+          <Link to="/admin/users">
+            <div className="bg-white shadow-lg w-full py-4 px-5">
+              <p className="text-sm font-medium">Usuários cadastrados</p>
+              <div className="mt-2">
+                {loading && <Loading className="mt-2 mb-2" />}
+
+                {!loading && (
+                  <p className="text-4xl font-medium">
+                    {cards?.usersCount !== 0 ? cards?.usersCount : 0}
+                  </p>
+                )}
+              </div>
+            </div>
+          </Link>
+        </div>
       </div>
     </AdminLayout>
   );

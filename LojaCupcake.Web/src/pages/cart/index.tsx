@@ -127,7 +127,9 @@ export default function Cart() {
 
                   <div className="lg:col-span-2 flex flex-col items-center mt-4 lg:mt-0">
                     <p className="lg:hidden font-semibold mb-1">Preço</p>
-                    <p className="font-medium">R${cupcake.amount}</p>
+                    <p className="font-medium">
+                      {formatCurrency(cupcake.amount)}
+                    </p>
                   </div>
 
                   <div className="lg:col-span-2 flex flex-col items-center mt-4 lg:mt-0">
@@ -142,7 +144,13 @@ export default function Cart() {
               ))}
             </div>
 
-            <div className="mt-3 flex items-end justify-end">
+            <div className="mt-3 flex items-end justify-end space-x-3">
+              <Link
+                to="/"
+                className="lg:w-auto w-full text-center border-2 border-gray-500 hover:bg-gray-500 hover:text-white transition-all py-2 px-4 rounded"
+              >
+                Continuar comprando
+              </Link>
               <Link
                 to="/checkout"
                 className="lg:w-auto w-full text-center border-2 border-[#d42e86] hover:bg-[#d42e86] hover:text-white transition-all py-2 px-4 rounded"

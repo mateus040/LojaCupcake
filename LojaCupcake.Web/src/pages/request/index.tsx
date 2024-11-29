@@ -10,9 +10,14 @@ import {
   getPaymentTypeLabel,
 } from "../../utils/convert-velues-enum";
 import { formatCurrency } from "../../utils/format-currency";
+import RequestStatusType from "../../enums/request-status-type";
+import { getRequestStatusTypeLabel } from "../../utils/convert-status-enum";
+import apiErrorHandler from "../../services/api-error-handler";
+import { Link } from "react-router-dom";
 
 export default function Request() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingCancel, setLoadingCancel] = useState<boolean>(false);
 
   const [requests, setRequests] = useState<RequestModel[]>([]);
 
@@ -25,6 +30,18 @@ export default function Request() {
         setRequests(data.data);
       })
       .finally(() => setLoading(false));
+  };
+
+  const cancelRequest = async (requestId: number): Promise<void> => {
+    setLoadingCancel(true);
+
+    api
+      .post(`/checkout/${requestId}/cancel`)
+      .then(() => {
+        fetchRequests();
+      })
+      .catch(apiErrorHandler)
+      .finally(() => setLoadingCancel(false));
   };
 
   useEffect(() => {
@@ -48,6 +65,9 @@ export default function Request() {
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-300 p-4 text-center">
+                    Status do pedido
+                  </th>
+                  <th className="border border-gray-300 p-4 text-center">
                     Cupcake
                   </th>
                   <th className="border border-gray-300 p-4 text-center">
@@ -68,11 +88,23 @@ export default function Request() {
                   <th className="border border-gray-300 p-4 text-center">
                     Data do pedido
                   </th>
+                  <th className="border border-gray-300 p-4 text-center">
+                    Opções
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {requests.map((request) => (
                   <tr key={request.id} className="bg-white">
+                    <td
+                      className={`border border-gray-300 p-4 text-center uppercase font-semibold ${
+                        request.status === RequestStatusType.FINISHED
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {getRequestStatusTypeLabel(request.status)}
+                    </td>
                     <td className="border border-gray-300 p-4 text-center">
                       {request.name}
                     </td>
@@ -93,6 +125,22 @@ export default function Request() {
                     </td>
                     <td className="border border-gray-300 p-4 text-center">
                       {format(new Date(request.created_at), "dd/MM/yyyy")}
+                    </td>
+                    <td className="flex flex-col border border-gray-300 p-4 text-center">
+                      {request.status === RequestStatusType.FINISHED && (
+                        <button
+                          onClick={() => cancelRequest(request.id)}
+                          className="text-red-600 underline"
+                        >
+                          {loadingCancel ? "Cancelando..." : "Cancelar"}
+                        </button>
+                      )}
+                      <Link
+                        to={`/requests/${request.id}`}
+                        className="text-blue-600 underline mt-1"
+                      >
+                        Ver
+                      </Link>
                     </td>
                   </tr>
                 ))}

@@ -13,6 +13,10 @@ import NotFound from "../pages/not-found";
 import ListCupcakes from "../pages/admin/cupcakes";
 import EditCupcake from "../pages/admin/cupcakes/edit";
 import Dashboard from "../pages/admin/dashboard";
+import ListRequests from "../pages/admin/requests";
+import ListUsers from "../pages/admin/users";
+import CreateUsers from "../pages/admin/users/create";
+import RequestDetails from "../pages/request-details";
 
 export default function AppRouter() {
   return (
@@ -49,6 +53,15 @@ export default function AppRouter() {
           element={
             <PrivateRoute>
               <Request />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/requests/:requestId"
+          element={
+            <PrivateRoute>
+              <RequestDetails />
             </PrivateRoute>
           }
         />
@@ -94,6 +107,33 @@ export default function AppRouter() {
           element={
             <PrivateRoute adminOnly={true}>
               <EditCupcake />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/requests"
+          element={
+            <PrivateRoute adminOnly={true}>
+              <ListRequests />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <PrivateRoute adminOnly={true}>
+              <ListUsers />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users/create"
+          element={
+            <PrivateRoute adminOnly={true}>
+              <CreateUsers />
             </PrivateRoute>
           }
         />

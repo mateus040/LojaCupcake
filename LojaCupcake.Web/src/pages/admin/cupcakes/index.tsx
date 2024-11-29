@@ -11,6 +11,8 @@ import toast from "react-hot-toast";
 import ServiceResult from "../../../interfaces/service-result";
 import { getApiErrorMessage } from "../../../services/api-error-handler";
 import { formatCurrency } from "../../../utils/format-currency";
+import { getCupcakeStatusTypeLabel } from "../../../utils/convert-status-enum";
+import CupcakeStatusType from "../../../enums/cupcake-status-type";
 
 export default function ListCupcakes() {
   const breadCrumbHistory: Page[] = [
@@ -124,6 +126,9 @@ export default function ListCupcakes() {
                     Quantidade
                   </th>
                   <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
+                    Status
+                  </th>
+                  <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
                     Imagem
                   </th>
                   <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
@@ -152,6 +157,15 @@ export default function ListCupcakes() {
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {cupcake.quantity}
+                    </td>
+                    <td
+                      className={`p-3 text-sm text-gray-700 whitespace-nowrap uppercase font-semibold ${
+                        cupcake.status === CupcakeStatusType.IN_STOCK
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {getCupcakeStatusTypeLabel(cupcake.status)}
                     </td>
                     <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       {images[cupcake.image] && (

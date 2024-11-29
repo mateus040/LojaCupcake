@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CheckoutStatusType;
 use App\Enums\DeliveryType;
 use App\Enums\PaymentType;
 use App\Exceptions\OutStockException;
@@ -30,7 +31,11 @@ class CheckoutController extends Controller
             return $checkout->items;
         });
 
-        return CheckoutItemsResource::collection($checkoutItems);
+        $orderItems = $checkoutItems->sortBy(function ($item) {
+            return $item->status === CheckoutStatusType::CANCELED->value ? 1 : 0;
+        });
+
+        return CheckoutItemsResource::collection($orderItems);
     }
 
     public function checkout(CheckoutRequest $request)
@@ -70,6 +75,7 @@ class CheckoutController extends Controller
                     'total_amount' => $totalAmount,
                     'delivery_type' => DeliveryType::from($request->delivery_type)->value,
                     'payment_type' => PaymentType::from($request->payment_type)->value,
+                    'status' => CheckoutStatusType::FINISHED->value,
                 ]);
 
                 $cupcake->decrement('quantity', $cartItem->quantity);
@@ -108,5 +114,19 @@ class CheckoutController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function cancelCheckout(CheckoutItem $checkout)
+    {
+        $checkout->status = CheckoutStatusType::CANCELED->value;
+
+        $checkout->save();
+
+        return response()->noContent();
+    }
+
+    public function show(CheckoutItem $checkout)
+    {
+        return new CheckoutItemsResource($checkout);
     }
 }

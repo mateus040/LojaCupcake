@@ -40,6 +40,19 @@ paths:
 
   /checkout:
     $ref: "./routes/checkout/actions.yaml"
+  /checkout/{id}:
+    $ref: "./routes/checkout/id/actions.yaml"
+
+  /checkout/{id}/cancel:
+    $ref: "./routes/checkout/id/cancel/actions.yaml"
 
   /dashboard:
     $ref: "./routes/dashboard/actions.yaml"
+
+  /users:
+    $ref: "./routes/users/actions.yaml"
+  /users/{id}:
+    $ref: "./routes/users/id/actions.yaml"
+
+  /requests:
+    $ref: "./routes/requests/actions.yaml"

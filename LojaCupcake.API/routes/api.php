@@ -8,6 +8,8 @@ use App\Http\Controllers\{
     DashboardController,
     MeController,
 };
+use App\Http\Controllers\Admin\RequestController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
@@ -44,7 +46,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/checkout')->group(function () {
         Route::get('/', [CheckoutController::class, 'index']);
         Route::post('/', [CheckoutController::class, 'checkout']);
+        Route::post('/{checkout}/cancel', [CheckoutController::class, 'cancelCheckout']);
+        Route::get('/{checkout}', [CheckoutController::class, 'show']);
     });
 
     Route::get('/dashboard', [DashboardController::class, 'getCount']);
+
+    Route::prefix('/users')->group(function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::delete('/{user}', [UserController::class, 'destroy']);
+    })
+;
+    Route::get('/requests', [RequestController::class, 'index']);
 });

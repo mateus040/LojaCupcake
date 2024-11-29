@@ -26,6 +26,9 @@ export default function Checkout() {
   const [profile, setProfile] = useState<ProfileModel | null>();
   const [cupcakesCart, setCupcakesCart] = useState<CartModel[]>([]);
 
+  const [showCreditCardFields, setShowCreditCardFields] =
+    useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -36,7 +39,7 @@ export default function Checkout() {
     setLoading(true);
 
     api
-      .get<ServiceResult<ProfileModel>>("/auth/me")
+      .get<ServiceResult<ProfileModel>>("/me")
       .then(({ data }) => {
         setProfile(data.data);
       })
@@ -74,6 +77,12 @@ export default function Checkout() {
   };
 
   const total = calculateSubtotal();
+
+  const handlePaymentTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setShowCreditCardFields(event.target.value === "credit_card");
+  };
 
   useEffect(() => {
     fetchProfile();
@@ -147,9 +156,12 @@ export default function Checkout() {
                       {...register("payment_type", {
                         required: "Informe o tipo de pagamento",
                       })}
+                      onChange={handlePaymentTypeChange}
                     >
                       <option value="">Selecione a forma de pagamento</option>
                       <option value="money">Dinheiro</option>
+                      <option value="credit_card">Cartão de crédito</option>
+                      <option value="pix">PIX</option>
                     </select>
                     {errors.payment_type && (
                       <p className="text-red-500 text-sm">
@@ -182,6 +194,86 @@ export default function Checkout() {
                   </div>
                 </div>
               </div>
+
+              {showCreditCardFields && (
+                <div className="mt-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+                    <div className="col-span-12 lg:col-span-6">
+                      <label className="font-light">Número do cartão</label>
+                      <input
+                        type="text"
+                        id="card_number"
+                        className="w-full p-2 rounded-lg border"
+                      />
+                    </div>
+                    <div className="col-span-12 lg:col-span-6">
+                      <label className="font-light">
+                        Nome impresso no cartão
+                      </label>
+                      <input
+                        type="text"
+                        id="name_cart"
+                        className="w-full p-2 rounded-lg border"
+                      />
+                    </div>
+                    <div className="col-span-12 lg:col-span-4">
+                      <label className="font-light">Validade</label>
+                      <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-2">
+                        <select
+                          id="month"
+                          className="w-full p-2 rounded-lg border border-gray-300"
+                        >
+                          <option value="">MM</option>
+                          {Array.from({ length: 12 }, (_, i) => (
+                            <option key={i + 1} value={i + 1}>
+                              {String(i + 1).padStart(2, "0")}
+                            </option>
+                          ))}
+                        </select>
+
+                        <select
+                          id="year"
+                          className="w-full p-2 rounded-lg border border-gray-300"
+                        >
+                          <option value="">AA</option>
+                          {Array.from({ length: 21 }, (_, i) => {
+                            const currentYear = new Date().getFullYear();
+                            const year = currentYear - 10 + i;
+                            return (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="col-span-12 lg:col-span-2">
+                      <label className="font-light">CVV</label>
+                      <input
+                        type="text"
+                        id="cvv"
+                        className="w-full p-2 rounded-lg border"
+                      />
+                    </div>
+                    <div className="col-span-12 lg:col-span-6">
+                      <label className="font-light">Parcelamento</label>
+                      <select
+                        id="installments"
+                        className="w-full p-2 rounded-lg border border-gray-300"
+                      >
+                        <option value="">Selecione</option>
+                        {[...Array(12)].map((_, index) => (
+                          <option key={index + 1} value={`${index + 1}`}>
+                            {index + 1}x
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-8">
@@ -223,11 +315,11 @@ export default function Checkout() {
                   <p className="font-semibold">Valor da compra</p>
                   <hr className="mt-5" />
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 mt-4">
-                    <div className="col-span-6">
+                    <div className="col-span-1">
                       <p className="font-semibold">Total:</p>
                     </div>
-                    <div className="col-span-6">
-                      <p className="font-light">R${total.toFixed(2)}</p>
+                    <div className="col-span-11">
+                      <p className="font-light">{formatCurrency(total)}</p>
                     </div>
                   </div>
 

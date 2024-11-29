@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CupcakeStatusType;
 use App\Http\Requests\Cupcake\CupcakeRequest;
 use App\Http\Resources\Cupcake\CupcakeInfoResource;
-use App\Http\Resources\Cupcake\CupcakeResource;
 use App\Models\Cupcake;
 use App\Services\FirebaseStorageService;
 use Illuminate\Support\Str;
@@ -21,8 +21,12 @@ class CupcakeController extends Controller
     {
         $cupcakes = Cupcake::get();
 
+        $orderCupcakes = $cupcakes->sortBy(function ($cupcake) {
+            return $cupcake->status === CupcakeStatusType::OUT_OF_STOCK->value ? 1 : 0;
+        });
+
         return response()->json([
-            'data' => $cupcakes
+            'data' => $orderCupcakes
         ], 200);
     }
 
@@ -33,12 +37,17 @@ class CupcakeController extends Controller
         $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
         $imageUrl = $this->firebaseStorage->uploadFile($request->image, $imageName);
 
-        Cupcake::create([
+        $status = $validated['quantity'] > 0 
+            ? CupcakeStatusType::IN_STOCK->value 
+            : CupcakeStatusType::OUT_OF_STOCK->value;
+
+        $cupcake = Cupcake::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'ingredients' => $validated['ingredients'],
             'amount' => $validated['amount'],
             'quantity' => $validated['quantity'],
+            'status' => $status,
             'image' => $imageName,
         ]);
 
@@ -57,12 +66,17 @@ class CupcakeController extends Controller
     {
         $validated = $request->validated();
 
+        $status = $validated['quantity'] > 0 
+            ? CupcakeStatusType::IN_STOCK->value 
+            : CupcakeStatusType::OUT_OF_STOCK->value;
+
         $cupcake->update([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'ingredients' => $validated['ingredients'],
             'amount' => $validated['amount'],
             'quantity' => $validated['quantity'],
+            'status' => $status,
         ]);
 
         if ($request->hasFile('image')) {

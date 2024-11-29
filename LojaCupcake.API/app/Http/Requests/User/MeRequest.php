@@ -67,4 +67,34 @@ class MeRequest extends FormRequest
 
         return $rules;
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'O nome deve ser informado.',
+            'name.string' => 'O nome deve ser uma string.',
+            'name.max' => 'O nome deve ter no máximo 256 caracteres.',
+            'email.required' => 'O e-mail deve ser informado.',
+            'email.string' => 'O e-mail deve ser uma string.',
+            'email.email' => 'O e-mail deve ser válido.',
+            'email.unique' => 'O e-mail já está em uso.',
+            'email.max' => 'O e-mail deve ter no máximo 256 caracteres.',
+            'password.confirmed' => 'A confirmação de senha não confere.',
+            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.max' => 'A senha deve ter no máximo 256 caracteres.',
+            'zipcode.string' => 'O CEP deve ser uma string.',
+            'zipcode.max' => 'O CEP deve ter no máximo 8 caracteres.',
+            'zipcode.min' => 'O CEP deve ter no mínimo 8 caracteres.',
+            'street.string' => 'A rua deve ser uma string.',
+            'street.max' => 'A rua deve ter no máximo 256 caracteres.',
+            'number.string' => 'O número deve ser uma string.',
+            'neighborhood.string' => 'O bairro deve ser uma string.',
+            'neighborhood.max' => 'O bairro deve ter no máximo 256 caracteres.',
+            'state.string' => 'O estado deve ser uma string.',
+            'state.max' => 'O estado deve ter no máximo 32 caracteres.',
+            'city.string' => 'A cidade deve ser uma string.',
+            'city.max' => 'A cidade deve ter no máximo 64 caracteres.',
+            'phone.string' => 'O telefone deve ser uma string.',
+        ];
+    }
 }

@@ -16,6 +16,7 @@ class Cupcake extends Model
         'ingredients',
         'amount',
         'quantity',
+        'status',
         'image',
     ];
 

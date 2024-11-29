@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
-import { FaStore } from "react-icons/fa6";
+import { FaUserAlt } from "react-icons/fa";
+import { FaClipboardList, FaStore } from "react-icons/fa6";
 import { GiCupcake } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
 import { RiDashboard2Fill } from "react-icons/ri";
@@ -85,6 +86,40 @@ export const Sidebar = ({ isSidebarOpen }: Props) => {
               <GiCupcake size={25} className="lg:-mt-1" />
               <span className="hidden lg:flex overflow-hidden transition-all w-52 ml-3">
                 Cupcakes
+              </span>
+            </Link>
+          </li>
+          <li
+            className={`flex items-center justify-center py-3 lg:py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+              isActive("/admin/requests")
+                ? `${!isSidebarOpen ? "bg-slate-600 text-white" : ""}`
+                : "hover:bg-slate-600 hover:text-white text-gray-300"
+            } mb-2`}
+          >
+            <Link
+              to="/admin/requests"
+              className="flex items-center overflow-hidden transition-all"
+            >
+              <FaClipboardList size={25} className="lg:-mt-1" />
+              <span className="hidden lg:flex overflow-hidden transition-all w-52 ml-3">
+                Pedidos
+              </span>
+            </Link>
+          </li>
+          <li
+            className={`flex items-center justify-center py-3 lg:py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+              isActive("/admin/users")
+                ? `${!isSidebarOpen ? "bg-slate-600 text-white" : ""}`
+                : "hover:bg-slate-600 hover:text-white text-gray-300"
+            } mb-2`}
+          >
+            <Link
+              to="/admin/users"
+              className="flex items-center overflow-hidden transition-all"
+            >
+              <FaUserAlt size={25} className="lg:-mt-1" />
+              <span className="hidden lg:flex overflow-hidden transition-all w-52 ml-3">
+                Usuários
               </span>
             </Link>
           </li>

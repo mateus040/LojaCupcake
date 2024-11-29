@@ -22,4 +22,14 @@ class CartRequest extends FormRequest
             ]
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'quantity.required' => 'A quantidade deve ser informada.',
+            'quantity.integer' => 'A quantidade deve ser um número inteiro.',
+            'quantity.min' => 'A quantidade deve ser maior ou igual a 1.',
+            'quantity.max' => 'A quantidade deve ser menor ou igual a 2147483647.',
+        ];
+    }
 }

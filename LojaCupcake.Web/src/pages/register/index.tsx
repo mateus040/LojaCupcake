@@ -56,9 +56,6 @@ export default function Register() {
         setValue("city", data.localidade);
         setValue("state", data.uf);
       })
-      .catch((error) => {
-        toast.error("Erro ao obter informações do CEP: " + error.message);
-      });
   };
 
   return (
@@ -116,8 +113,9 @@ export default function Register() {
           <div className="col-span-12 lg:col-span-6">
             <label className="text-base font-medium text-gray-900">CEP</label>
             <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-              <input
-                placeholder="Informe seu CEP"
+              <Inputmask
+                mask="99999-999"
+                placeholder="_____-___"
                 type="text"
                 id="zipcode"
                 className="block w-full py-4 pl-5 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-black focus:bg-white"

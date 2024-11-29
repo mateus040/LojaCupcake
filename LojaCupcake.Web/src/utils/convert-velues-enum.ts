@@ -16,6 +16,10 @@ const getPaymentTypeLabel = (type: PaymentType) => {
   switch (type) {
     case PaymentType.MONEY:
       return "Dinheiro";
+    case PaymentType.CREDIT_CARD:
+      return "Cartão de crédito";
+    case PaymentType.PIX:
+      return "Pix";
     default:
       return "Desconhecido";
   }
