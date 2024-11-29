@@ -10,6 +10,12 @@ import { formatCurrency } from "../../utils/format-currency";
 import RequestModel from "../../interfaces/models/request-model";
 import RequestStatusType from "../../enums/request-status-type";
 import { getRequestStatusTypeLabel } from "../../utils/convert-status-enum";
+import {
+  getDeliveryTypeLabel,
+  getPaymentTypeLabel,
+} from "../../utils/convert-velues-enum";
+import DeliveryType from "../../enums/delivery-type";
+import PaymentType from "../../enums/payment-type";
 
 export default function RequestDetails() {
   const { requestId } = useParams();
@@ -139,6 +145,25 @@ export default function RequestDetails() {
                         </p>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="flex flex-col space-y-5 mt-2">
+                    <p className="mt-3">
+                      Tipo de pagamento:{" "}
+                      <span className="font-semibold">
+                        {getPaymentTypeLabel(
+                          request?.payment_type as PaymentType
+                        )}
+                      </span>
+                    </p>
+                    <p className="mt-3">
+                      Tipo de entrega:{" "}
+                      <span className="font-semibold">
+                        {getDeliveryTypeLabel(
+                          request?.delivery_type as DeliveryType
+                        )}
+                      </span>
+                    </p>
                   </div>
                 </div>
 
